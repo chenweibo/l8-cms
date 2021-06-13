@@ -1,25 +1,25 @@
 <template>
     <jet-action-section>
         <template #title>
-            Two Factor Authentication
+            两因素身份验证
         </template>
 
         <template #description>
-            Add additional security to your account using two factor authentication.
+            使用双因素身份验证为您的帐户增加额外的安全性。
         </template>
 
         <template #content>
             <h3 class="text-lg font-medium text-gray-900" v-if="twoFactorEnabled">
-                You have enabled two factor authentication.
+                您已启用两因素身份验证。
             </h3>
 
             <h3 class="text-lg font-medium text-gray-900" v-else>
-                You have not enabled two factor authentication.
+                您尚未启用两因素身份验证。
             </h3>
 
             <div class="mt-3 max-w-xl text-sm text-gray-600">
                 <p>
-                    When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone's Google Authenticator application.
+                    启用双因素身份验证后，系统会在身份验证期间提示您输入安全的随机令牌。 您可以从手机的 Google 身份验证器应用程序中检索此令牌。
                 </p>
             </div>
 
@@ -27,7 +27,7 @@
                 <div v-if="qrCode">
                     <div class="mt-4 max-w-xl text-sm text-gray-600">
                         <p class="font-semibold">
-                            Two factor authentication is now enabled. Scan the following QR code using your phone's authenticator application.
+                            现在启用了两因素身份验证。 使用手机的验证器应用程序扫描以下二维码。
                         </p>
                     </div>
 
@@ -38,7 +38,7 @@
                 <div v-if="recoveryCodes.length > 0">
                     <div class="mt-4 max-w-xl text-sm text-gray-600">
                         <p class="font-semibold">
-                            Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.
+                            将这些恢复代码存储在安全的密码管理器中。 如果您的双因素身份验证设备丢失，它们可用于恢复对您帐户的访问。
                         </p>
                     </div>
 
@@ -54,7 +54,7 @@
                 <div v-if="! twoFactorEnabled">
                     <jet-confirms-password @confirmed="enableTwoFactorAuthentication">
                         <jet-button type="button" :class="{ 'opacity-25': enabling }" :disabled="enabling">
-                            Enable
+                            使能够
                         </jet-button>
                     </jet-confirms-password>
                 </div>
@@ -63,13 +63,13 @@
                     <jet-confirms-password @confirmed="regenerateRecoveryCodes">
                         <jet-secondary-button class="mr-3"
                                         v-if="recoveryCodes.length > 0">
-                            Regenerate Recovery Codes
+                            重新生成恢复代码
                         </jet-secondary-button>
                     </jet-confirms-password>
 
                     <jet-confirms-password @confirmed="showRecoveryCodes">
                         <jet-secondary-button class="mr-3" v-if="recoveryCodes.length === 0">
-                            Show Recovery Codes
+                            显示恢复代码
                         </jet-secondary-button>
                     </jet-confirms-password>
 
@@ -77,7 +77,7 @@
                         <jet-danger-button
                                         :class="{ 'opacity-25': disabling }"
                                         :disabled="disabling">
-                            Disable
+                            禁用
                         </jet-danger-button>
                     </jet-confirms-password>
                 </div>

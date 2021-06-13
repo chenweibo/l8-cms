@@ -1,33 +1,32 @@
 <template>
     <jet-action-section>
         <template #title>
-            Delete Account
+            删除帐户
         </template>
 
         <template #description>
-            Permanently delete your account.
+            永久删除您的帐户。
         </template>
 
         <template #content>
             <div class="max-w-xl text-sm text-gray-600">
-                Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.
+                一旦您的帐户被删除，其所有资源和数据将被永久删除。 在删除您的帐户之前，请下载您希望保留的任何数据或信息。
             </div>
 
             <div class="mt-5">
                 <jet-danger-button @click="confirmUserDeletion">
-                    Delete Account
+                    删除帐户
                 </jet-danger-button>
             </div>
 
             <!-- Delete Account Confirmation Modal -->
             <jet-dialog-modal :show="confirmingUserDeletion" @close="closeModal">
                 <template #title>
-                    Delete Account
+                    删除帐户
                 </template>
 
                 <template #content>
-                    Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.
-
+                    您确定要删除您的帐户吗？ 一旦您的帐户被删除，其所有资源和数据将被永久删除。 请输入您的密码以确认您要永久删除您的帐户。
                     <div class="mt-4">
                         <jet-input type="password" class="mt-1 block w-3/4" placeholder="Password"
                                     ref="password"
@@ -40,11 +39,11 @@
 
                 <template #footer>
                     <jet-secondary-button @click="closeModal">
-                        Cancel
+                        取消
                     </jet-secondary-button>
 
                     <jet-danger-button class="ml-2" @click="deleteUser" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Delete Account
+                        删除帐户
                     </jet-danger-button>
                 </template>
             </jet-dialog-modal>
