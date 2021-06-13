@@ -11,7 +11,7 @@ class Content extends Model
     use HasFactory;
 
     /**
-     * 为 array / JSON 序列化准备日期格式
+     * 为 array / JSON 序列化准备日期格式.
      *
      * @param  \DateTimeInterface  $date
      * @return string

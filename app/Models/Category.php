@@ -11,12 +11,9 @@ class Category extends Model
     use NodeTrait;
     use HasFactory;
 
-
-
     protected $fillable = [
-        'name', 'detail', 'sort', 'status', 'url', 'type', 'controller', 'function', 'columnTemplate', 'contentTemplate', 'page'
+        'name', 'detail', 'sort', 'status', 'url', 'type', 'controller', 'function', 'columnTemplate', 'contentTemplate', 'page',
     ];
-
 
     protected $casts = [
         'detail' => 'json',
@@ -24,7 +21,7 @@ class Category extends Model
     ];
 
     /**
-     * 处理url
+     * 处理url.
      *
      * @return string
      */

@@ -19,8 +19,8 @@ class CreateComponentsTable extends Migration
             $table->string('column', 100);
             $table->json('note')->nullable($value = true);
             $table->json('value')->nullable($value = true);
-            $table->string("type");
-            $table->integer("scope");
+            $table->string('type');
+            $table->integer('scope');
             $table->timestamps();
         });
     }

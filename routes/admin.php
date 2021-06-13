@@ -1,22 +1,19 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\Admin\BasicController;
-use App\Http\Controllers\Admin\BannerController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\ToolsController;
-use App\Http\Controllers\Admin\FilesController;
-use App\Http\Controllers\Admin\ContentController;
-use App\Http\Controllers\Admin\UploadsController;
-use App\Http\Controllers\Admin\ComponentController;
 use App\Http\Controllers\Admin\AccountController;
-
+use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\BasicController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ComponentController;
+use App\Http\Controllers\Admin\ContentController;
+use App\Http\Controllers\Admin\FilesController;
+use App\Http\Controllers\Admin\ToolsController;
+use App\Http\Controllers\Admin\UploadsController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia\Inertia::render('Dashboard');
 })->name('dashboard');
-
 
 \LaravelUploader::routes([
     'as' => 'files.upload',
@@ -27,12 +24,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //后端路由
 Route::group(['middleware' => config('jetstream.middleware', ['web'])], function () {
     Route::group(['middleware' => ['auth', 'verified']], function () {
-
         Route::post('/admin/upload', [UploadsController::class, 'upload'])->name('admin.upload');
         Route::get('/admin/download', [UploadsController::class, 'download'])->name('admin.download');
 
-        Route::get('/basic/show', [BasicController::class, 'show'])->name("basic.show");
-        Route::put('/basic/update', [BasicController::class, 'update'])->name("basic.update");
+        Route::get('/basic/show', [BasicController::class, 'show'])->name('basic.show');
+        Route::put('/basic/update', [BasicController::class, 'update'])->name('basic.update');
         Route::get('/admin/clearCache', [ToolsController::class, 'clearCache']);
         Route::get('/admin/cache', [ToolsController::class, 'cache']);
 
@@ -65,4 +61,3 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
         ]);
     });
 });
-

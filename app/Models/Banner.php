@@ -12,9 +12,8 @@ class Banner extends Model
     use HasFactory;
     use SoftDeletes;
 
-
     /**
-     * 为 array / JSON 序列化准备日期格式
+     * 为 array / JSON 序列化准备日期格式.
      *
      * @param  \DateTimeInterface  $date
      * @return string
@@ -24,7 +23,6 @@ class Banner extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-
     protected $fillable = [
         'name', 'description', 'banners',
     ];
@@ -32,6 +30,4 @@ class Banner extends Model
     protected $casts = [
         'banners' => 'array',
     ];
-
-
 }

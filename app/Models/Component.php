@@ -10,9 +10,8 @@ class Component extends Model
 {
     use HasFactory;
 
-
     /**
-     * 为 array / JSON 序列化准备日期格式
+     * 为 array / JSON 序列化准备日期格式.
      *
      * @param  \DateTimeInterface  $date
      * @return string
@@ -23,7 +22,7 @@ class Component extends Model
     }
 
     protected $fillable = [
-        'label', 'column', 'note', 'value', 'type', 'scope'
+        'label', 'column', 'note', 'value', 'type', 'scope',
     ];
 
     protected $casts = [

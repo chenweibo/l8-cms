@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Content;
-use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ContentController extends Controller
 {
@@ -17,7 +17,7 @@ class ContentController extends Controller
      */
     public function index()
     {
-        $nodes = Category::where("url", "!=", '/')->orderBy('sort', 'asc')->get()->toTree();
+        $nodes = Category::where('url', '!=', '/')->orderBy('sort', 'asc')->get()->toTree();
 
         return Inertia::render('Contents/List', ['menu' => $nodes, 'isIndex' => true]);
     }

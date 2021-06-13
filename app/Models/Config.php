@@ -10,9 +10,8 @@ class Config extends Model
 {
     use HasFactory;
 
-
     /**
-     * 为 array / JSON 序列化准备日期格式
+     * 为 array / JSON 序列化准备日期格式.
      *
      * @param  \DateTimeInterface  $date
      * @return string
@@ -22,9 +21,8 @@ class Config extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-
     protected $fillable = [
-        'title', 'description', 'type', 'options'
+        'title', 'description', 'type', 'options',
     ];
 
     protected $casts = [

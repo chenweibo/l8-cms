@@ -40,13 +40,13 @@ class CreateAdmin extends Command
     public function handle()
     {
         $email = $this->ask('输入账号( 邮箱格式 )');
-        if (!User::where("email", $email)->get()->isEmpty()) {
+        if (! User::where('email', $email)->get()->isEmpty()) {
             $this->error('用户已经存在.');
+
             return 'ok';
         }
 
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-
             $password = $this->ask('输入密码.');
 
             $isAdmin = $this->choice(
@@ -61,9 +61,11 @@ class CreateAdmin extends Command
                 'password' => Hash::make($password),
             ]);
             $this->info('账号创建成功.');
+
             return 'ok';
         } else {
             $this->error('邮箱格式不合法.');
+
             return 'ok';
         }
     }

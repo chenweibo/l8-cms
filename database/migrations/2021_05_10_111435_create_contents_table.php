@@ -16,9 +16,9 @@ class CreateContentsTable extends Migration
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->integer("status")->default(1);
-            $table->integer("category_id");
-            $table->integer("sort")->default(0);
+            $table->integer('status')->default(1);
+            $table->integer('category_id');
+            $table->integer('sort')->default(0);
             $table->json('detail')->nullable($value = true);
             $table->timestamps();
         });

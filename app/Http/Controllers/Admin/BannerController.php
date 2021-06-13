@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Component;
+use Inertia\Inertia;
 
 class BannerController extends Controller
 {
@@ -29,11 +29,9 @@ class BannerController extends Controller
      */
     public function create()
     {
-
         $component = Component::where('scope', 4)->select('id', 'label', 'column', 'note', 'value', 'type', 'scope')->get();
 
         return Inertia::render('Banners/BannerDetail', ['isEdit' => false, 'component' => $component]);
-
     }
 
     /**
@@ -44,9 +42,10 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
-        Validator::make($request->all(),
+        Validator::make(
+            $request->all(),
             ['name' => ['required', 'string', 'max:255'],
-                'description' => ['required', 'string', 'max:255']
+                'description' => ['required', 'string', 'max:255'],
             ],
             ['name.required' => '名称不能为空',
                 'description.required' => '描述不能为空',
@@ -57,6 +56,7 @@ class BannerController extends Controller
             'description' => $request->description,
             'banners' => $request->banners,
         ]);
+
         return Redirect::route('banners.index');
     }
 
@@ -68,7 +68,6 @@ class BannerController extends Controller
      */
     public function show(Banner $banner)
     {
-
     }
 
     /**
@@ -79,10 +78,9 @@ class BannerController extends Controller
      */
     public function edit(Banner $banner)
     {
-
         $component = Component::where('scope', 4)->select('id', 'label', 'column', 'note', 'value', 'type', 'scope')->get();
 
-        return Inertia::render('Banners/BannerDetail', ['isEdit' => true, 'banners' => $banner,'component' => $component]);
+        return Inertia::render('Banners/BannerDetail', ['isEdit' => true, 'banners' => $banner, 'component' => $component]);
     }
 
     /**
@@ -95,6 +93,7 @@ class BannerController extends Controller
     public function update(Request $request, Banner $banner)
     {
         $banner->forceFill($request->all())->save();
+
         return Redirect::route('banners.index');
     }
 
@@ -107,6 +106,7 @@ class BannerController extends Controller
     public function destroy(Banner $banner)
     {
         $banner->delete();
+
         return Redirect::route('banners.index');
     }
 }

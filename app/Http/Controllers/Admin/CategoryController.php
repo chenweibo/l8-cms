@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Component;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
-use Inertia\Inertia;
-use App\Models\Category;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\File;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -23,7 +23,6 @@ class CategoryController extends Controller
      */
     public function index()
     {
-
         $nodes = Category::orderBy('sort', 'asc')->get()->toTree();
 
         return Inertia::render('Categories/Index', ['categoryList' => $nodes]);
@@ -61,14 +60,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-
-        Validator::make($request->all(),
+        Validator::make(
+            $request->all(),
             [
                 'name' => ['required', 'string', 'max:255'],
-                'url' => ['required', in_array($request->input("type"), ['0', '1', '6']) ? 'unique:categories,url' : ''],
-                'controller' => [in_array($request->input("type"), ['6']) ? 'required' : ''],
-                'function' => [in_array($request->input("type"), ['6']) ? 'required' : ''],
-                'parent_id' => ['required']
+                'url' => ['required', in_array($request->input('type'), ['0', '1', '6']) ? 'unique:categories,url' : ''],
+                'controller' => [in_array($request->input('type'), ['6']) ? 'required' : ''],
+                'function' => [in_array($request->input('type'), ['6']) ? 'required' : ''],
+                'parent_id' => ['required'],
             ],
             [
                 'name.required' => '名称不能为空',
@@ -83,15 +82,12 @@ class CategoryController extends Controller
         $all['function'] = $handle[1];
 
         if ($request->parent_id == 0) {
-
-
             Category::create($all);
         } else {
             Category::create($all, Category::find($request->parent_id));
         }
 
         return Redirect::route('categories.index');
-
     }
 
     public function handleConversion($request)
@@ -99,7 +95,6 @@ class CategoryController extends Controller
         if (trim($request->url) == '/') {
             return ['BusinessController', 'index'];
         } else {
-
             switch ($request->type) {
                 case $request->type == '0':
                     return ['BusinessController', 'page'];
@@ -121,7 +116,6 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-
     }
 
     /**
@@ -149,10 +143,11 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         if ($request->type == '2') {
-            Validator::make($request->all(),
+            Validator::make(
+                $request->all(),
                 [
                     'name' => ['required', 'string', 'max:255'],
-                    'parent_id' => ['required']
+                    'parent_id' => ['required'],
                 ],
                 [
                     'name.required' => '名称不能为空',
@@ -160,13 +155,14 @@ class CategoryController extends Controller
                 ]
             )->validate();
         } else {
-            Validator::make($request->all(),
+            Validator::make(
+                $request->all(),
                 [
                     'name' => ['required', 'string', 'max:255'],
                     'url' => ['required',
-                        Rule::unique('categories')->ignore($category->id)
+                        Rule::unique('categories')->ignore($category->id),
                     ],
-                    'parent_id' => ['required']
+                    'parent_id' => ['required'],
                 ],
                 [
                     'name.required' => '名称不能为空',
@@ -176,7 +172,6 @@ class CategoryController extends Controller
             )->validate();
         }
 
-
         $category->update($request->except('parent_id'));
         if ($request->input('parent_id') == 0) {
             $category->makeRoot()->save();
@@ -184,10 +179,9 @@ class CategoryController extends Controller
             $parent = Category::find($request->input('parent_id'));
             $category->parent_id = $parent->id;
             $category->save();
-
         }
-        return Redirect::route('categories.index');
 
+        return Redirect::route('categories.index');
     }
 
     /**
@@ -200,9 +194,9 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
+
         return Redirect::route('categories.index');
     }
-
 
     /**
      * update menu sort.
@@ -213,13 +207,11 @@ class CategoryController extends Controller
      */
     public function updateSort(Request $request, Category $category)
     {
-
         $category->sort = $request->sort;
         $category->save();
+
         return Redirect::route('categories.index');
-
     }
-
 
     /**
      * update menu redirect.
@@ -230,12 +222,11 @@ class CategoryController extends Controller
      */
     public function updateRedirect(Request $request, Category $category)
     {
-
         $category->redirect = $request->redirect;
         $category->save();
+
         return Redirect::route('categories.index');
     }
-
 
     /**
      * update menu status.
@@ -246,28 +237,27 @@ class CategoryController extends Controller
      */
     public function updateStatus(Request $request, Category $category): \Illuminate\Http\JsonResponse
     {
-
         $category->status = $request->status;
         $category->save();
+
         return response()->json(['code' => 200, 'status' => $category->status]);
     }
 
     public function generateMenu(): array
     {
-
         $list = Category::all();
         $content = '';
 
-        $start = '<?php' . PHP_EOL;
-        $content .= $start . PHP_EOL
-            . 'use Illuminate\Support\Facades\Route;' . PHP_EOL
-            . 'use App\Http\Controllers\Home\BusinessController;' . PHP_EOL
-            . 'use App\Http\Controllers\Home\CustomController;' . PHP_EOL . PHP_EOL;
+        $start = '<?php'.PHP_EOL;
+        $content .= $start.PHP_EOL
+            .'use Illuminate\Support\Facades\Route;'.PHP_EOL
+            .'use App\Http\Controllers\Home\BusinessController;'.PHP_EOL
+            .'use App\Http\Controllers\Home\CustomController;'.PHP_EOL.PHP_EOL;
 
         $handle = $this->handleRouteArr($content);
         File::replace(base_path('routes/template.php'), $handle);
-        return ['code' => 200, 'mes' => 'ok'];
 
+        return ['code' => 200, 'mes' => 'ok'];
     }
 
     public function handleRouteArr($content)
@@ -276,24 +266,22 @@ class CategoryController extends Controller
         $uni = second_array_unique_bykey($list, 'url');
 
         foreach ($uni as $v) {
-
             switch ($v->type) {
                 case $v->type == '0':
 
-                    $content .= "Route::get('" . $v->url . "', [ " . $v->controller . "::class, 'page']);" . PHP_EOL;
+                    $content .= "Route::get('".$v->url."', [ ".$v->controller."::class, 'page']);".PHP_EOL;
                     break;
                 case $v->type == '1':
-                    $content .= "Route::get('" . $v->url . "', [ " . $v->controller . "::class, 'page']);" . PHP_EOL;
+                    $content .= "Route::get('".$v->url."', [ ".$v->controller."::class, 'page']);".PHP_EOL;
                     break;
                 case $v->type == '2':
-                    $content .= "Route::get('" . $v->url . "/{id?}', [ " . $v->controller . "::class, 'list']);" . PHP_EOL;
-                    $content .= "Route::get('" . $v->url . "View/{id?}', [ " . $v->controller . "::class, 'listView']);" . PHP_EOL;
+                    $content .= "Route::get('".$v->url."/{id?}', [ ".$v->controller."::class, 'list']);".PHP_EOL;
+                    $content .= "Route::get('".$v->url."View/{id?}', [ ".$v->controller."::class, 'listView']);".PHP_EOL;
                     break;
                 case $v->type == '3':
-                    $content .= "Route::get('" . $v->url . "', [ " . $v->controller . "::class, '" . $v->function . "']);" . PHP_EOL;
+                    $content .= "Route::get('".$v->url."', [ ".$v->controller."::class, '".$v->function."']);".PHP_EOL;
                     break;
             }
-
         }
 
         return $content;

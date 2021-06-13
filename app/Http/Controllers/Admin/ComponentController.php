@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
-use App\Models\Component;
 
 class ComponentController extends Controller
 {
@@ -32,7 +32,6 @@ class ComponentController extends Controller
     public function create()
     {
         return Inertia::render('Customize/CustomizeForm');
-
     }
 
     /**
@@ -43,11 +42,12 @@ class ComponentController extends Controller
      */
     public function store(Request $request)
     {
-        Validator::make($request->all(),
+        Validator::make(
+            $request->all(),
             ['label' => ['required', 'string', 'max:255'],
                 'type' => ['required'],
                 'scope' => ['required'],
-                'column' => ['required']
+                'column' => ['required'],
 
             ],
             ['label.required' => '名称不能为空',
@@ -60,8 +60,6 @@ class ComponentController extends Controller
         Component::create($request->all());
 
         return Redirect::route('components.index');
-
-
     }
 
     /**
@@ -109,7 +107,8 @@ class ComponentController extends Controller
     {
         $component->note = $request->note;
         $component->save();
-        return ['code' => '200','component'=>$component];
+
+        return ['code' => '200', 'component'=>$component];
     }
 
     /**
@@ -121,6 +120,7 @@ class ComponentController extends Controller
     public function destroy(Component $component)
     {
         $component->delete();
+
         return Redirect::route('components.index');
     }
 }

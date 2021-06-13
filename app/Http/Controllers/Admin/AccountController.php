@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -11,8 +13,6 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
-use App\Models\User;
-use Auth;
 
 class AccountController extends Controller
 {
@@ -23,21 +23,20 @@ class AccountController extends Controller
      */
     public function index(Request $request)
     {
-        $list = User::where("isAdmin", '!=', 1)->get();
+        $list = User::where('isAdmin', '!=', 1)->get();
 
         return Inertia::render('Account/List', ['list' => $list]);
     }
 
     public function create(Request $request): \Inertia\Response
     {
-
         return Inertia::render('Account/AccountForm', ['isEdit' => false]);
-
     }
 
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
-        Validator::make($request->all(),
+        Validator::make(
+            $request->all(),
             [
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'email', 'unique:users,email'],
@@ -63,7 +62,8 @@ class AccountController extends Controller
 
     public function update(Request $request, User $user)
     {
-        Validator::make($request->all(),
+        Validator::make(
+            $request->all(),
             [
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
@@ -84,13 +84,9 @@ class AccountController extends Controller
         $user->save();
 
         return Redirect::route('accounts.index');
-
     }
 
-
     /**
-     *
-     *
      * @param User $user
      * @return \Inertia\Response
      * @throws \Exception
@@ -111,15 +107,14 @@ class AccountController extends Controller
     {
         $user->tokens->each->delete();
         $user->delete();
+
         return Redirect::route('accounts.index');
     }
-
-
 
     public function adminLogout(): RedirectResponse
     {
         Auth::logout();
+
         return Redirect::route('login');
     }
-
 }

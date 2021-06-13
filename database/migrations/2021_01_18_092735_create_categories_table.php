@@ -22,9 +22,9 @@ class CreateCategoriesTable extends Migration
             $table->string('redirect')->nullable($value = true);
             $table->string('columnTemplate')->nullable($value = true);
             $table->string('contentTemplate')->nullable($value = true);
-            $table->integer("sort")->default(0);
-            $table->integer("status")->default(1);
-            $table->integer("page")->default(10);
+            $table->integer('sort')->default(0);
+            $table->integer('status')->default(1);
+            $table->integer('page')->default(10);
             $table->string('controller')->nullable($value = true);
             $table->string('function')->nullable($value = true);
             $table->nestedSet();
