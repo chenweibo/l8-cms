@@ -25,8 +25,11 @@ class BasicController extends Controller
 
         if ($basic->isEmpty()) {
 
-            return Inertia::render('Basic/Show', ['basic' => $component, 'component' => []]);
+
+            return Inertia::render('Basic/Show', ['basic' => $component, 'component' => $component]);
         }
+
+
 
 
         return Inertia::render('Basic/Show', ['basic' => $basic[0]->options, 'component' => $component]);
