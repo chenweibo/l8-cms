@@ -131,7 +131,7 @@
                                     </inertia-link>
 
                                     <inertia-link
-                                        :href="$page.props.list.next_page_url?$page.props.list.next_page_url:'javascript:void(0);'"
+                                        :href="$page.props.list.next_page_url?$page.props.list.next_page_url:'#'"
                                         class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                         <span class="sr-only">下一页</span>
                                         <!-- Heroicon name: solid/chevron-right -->
