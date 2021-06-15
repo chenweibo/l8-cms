@@ -10,6 +10,11 @@ class Content extends Model
 {
     use HasFactory;
 
+
+    protected $fillable = [
+        'name','detail','category_id','sort','status'
+    ];
+
     /**
      * 为 array / JSON 序列化准备日期格式.
      *

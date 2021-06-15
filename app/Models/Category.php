@@ -29,4 +29,21 @@ class Category extends Model
     {
         return $this->url;
     }
+
+
+    /**
+     * 获取栏目关联单文章
+     */
+    public function page(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Content::class, 'category_id');
+    }
+
+    /**
+     * 获取栏目关联列表内容
+     */
+    public function list(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Content::class, 'category_id', 'id');
+    }
 }

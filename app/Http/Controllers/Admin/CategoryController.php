@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Component;
+use App\Models\Content;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -82,9 +84,13 @@ class CategoryController extends Controller
         $all['function'] = $handle[1];
 
         if ($request->parent_id == 0) {
-            Category::create($all);
+            $category = Category::create($all);
         } else {
-            Category::create($all, Category::find($request->parent_id));
+            $category = Category::create($all, Category::find($request->parent_id));
+        }
+        if ($request->type == 1) {
+            $category->page()->save(new Content(['name' => $request->name]));
+            $category->refresh();
         }
 
         return Redirect::route('categories.index');
@@ -180,6 +186,10 @@ class CategoryController extends Controller
             $category->parent_id = $parent->id;
             $category->save();
         }
+        if ($request->type == 1) {
+            $page = $category->page();
+            $page->update(['name' => $request->name]);
+        }
 
         return Redirect::route('categories.index');
     }
@@ -193,6 +203,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        $category->page()->delete();
         $category->delete();
 
         return Redirect::route('categories.index');
@@ -248,11 +259,11 @@ class CategoryController extends Controller
         $list = Category::all();
         $content = '';
 
-        $start = '<?php'.PHP_EOL;
-        $content .= $start.PHP_EOL
-            .'use Illuminate\Support\Facades\Route;'.PHP_EOL
-            .'use App\Http\Controllers\Home\BusinessController;'.PHP_EOL
-            .'use App\Http\Controllers\Home\CustomController;'.PHP_EOL.PHP_EOL;
+        $start = '<?php' . PHP_EOL;
+        $content .= $start . PHP_EOL
+            . 'use Illuminate\Support\Facades\Route;' . PHP_EOL
+            . 'use App\Http\Controllers\Home\BusinessController;' . PHP_EOL
+            . 'use App\Http\Controllers\Home\CustomController;' . PHP_EOL . PHP_EOL;
 
         $handle = $this->handleRouteArr($content);
         File::replace(base_path('routes/template.php'), $handle);
@@ -269,17 +280,17 @@ class CategoryController extends Controller
             switch ($v->type) {
                 case $v->type == '0':
 
-                    $content .= "Route::get('".$v->url."', [ ".$v->controller."::class, 'page']);".PHP_EOL;
+                    $content .= "Route::get('" . $v->url . "', [ " . $v->controller . "::class, 'page']);" . PHP_EOL;
                     break;
                 case $v->type == '1':
-                    $content .= "Route::get('".$v->url."', [ ".$v->controller."::class, 'page']);".PHP_EOL;
+                    $content .= "Route::get('" . $v->url . "', [ " . $v->controller . "::class, 'page']);" . PHP_EOL;
                     break;
                 case $v->type == '2':
-                    $content .= "Route::get('".$v->url."/{id?}', [ ".$v->controller."::class, 'list']);".PHP_EOL;
-                    $content .= "Route::get('".$v->url."View/{id?}', [ ".$v->controller."::class, 'listView']);".PHP_EOL;
+                    $content .= "Route::get('" . $v->url . "/{id?}', [ " . $v->controller . "::class, 'list']);" . PHP_EOL;
+                    $content .= "Route::get('" . $v->url . "View/{id?}', [ " . $v->controller . "::class, 'listView']);" . PHP_EOL;
                     break;
                 case $v->type == '3':
-                    $content .= "Route::get('".$v->url."', [ ".$v->controller."::class, '".$v->function."']);".PHP_EOL;
+                    $content .= "Route::get('" . $v->url . "', [ " . $v->controller . "::class, '" . $v->function . "']);" . PHP_EOL;
                     break;
             }
         }
