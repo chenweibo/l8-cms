@@ -30,9 +30,8 @@ class Category extends Model
         return $this->url;
     }
 
-
     /**
-     * 获取栏目关联单文章
+     * 获取栏目关联单文章.
      */
     public function page(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
@@ -40,7 +39,7 @@ class Category extends Model
     }
 
     /**
-     * 获取栏目关联列表内容
+     * 获取栏目关联列表内容.
      */
     public function list(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
