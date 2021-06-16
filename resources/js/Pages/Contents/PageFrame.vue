@@ -1,6 +1,9 @@
 <template>
 <div>
-    PageFrame
+    <h2 class="font-semibold text-xl text-gray-800 mb-3 leading-tight">
+        {{ $page.props.title }}
+    </h2>
+    
 </div>
 </template>
 

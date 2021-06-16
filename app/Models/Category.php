@@ -33,9 +33,9 @@ class Category extends Model
     /**
      * 获取栏目关联单文章.
      */
-    public function page(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function article(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasOne(Content::class, 'category_id');
+        return $this->hasOne(Content::class, 'page_id');
     }
 
     /**

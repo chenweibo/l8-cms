@@ -53,6 +53,8 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
 
         Route::post('/admin/adminLogout', [AccountController::class, 'adminLogout'])->name('logout.admin');
 
+        Route::get('/admin/contents/{menuId}', [ContentController::class, 'handleContent'])->name('contents.handleContent');
+
         Route::resources([
             'banners' => BannerController::class,
             'categories' => CategoryController::class,

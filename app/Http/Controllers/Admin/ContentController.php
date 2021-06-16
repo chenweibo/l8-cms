@@ -22,6 +22,27 @@ class ContentController extends Controller
         return Inertia::render('Contents/List', ['menu' => $nodes, 'isIndex' => true]);
     }
 
+    public function handleContent(Request $request, $menuId): \Inertia\Response
+    {
+        $nodes = Category::where('url', '!=', '/')->orderBy('sort', 'asc')->get()->toTree();
+        $menu = Category::find($menuId);
+        $content = '';
+        $components = '';
+        if (! $menu) {
+            abort(404);
+        }
+        if ($menu->type == 2) {
+            $content = $menu->article;
+            $components = 'PageFrame';
+        }
+        if ($menu->type == 3) {
+            $content = $menu->list;
+            $components = 'ListFrame';
+        }
+
+        return Inertia::render('Contents/List', ['menu' => $nodes, 'isIndex' => false, 'menuId' => $menuId, 'content' => $content, 'component' => $components, 'title'=>$menu->name]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

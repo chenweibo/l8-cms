@@ -11,16 +11,11 @@
                     </nav>
 
                 </div>
-
-
             </div>
             <div class="flex-grow   py-10 sm:px-6 lg:px-8 ">
 
                 <div class="p-8 md:min-h-screen mt-5 md:mt-0 bg-white md:col-span-2 border-none border-4 border-gray-600 rounded-lg ">
-                    <h2 class="font-semibold text-xl text-gray-800 mb-3 leading-tight">
-                        新闻资讯
-                    </h2>
-
+                    <component v-bind:is="$page.props.component"></component>
                 </div>
 
             </div>

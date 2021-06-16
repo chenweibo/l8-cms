@@ -1,4 +1,8 @@
 <template>
+   <div>
+    <h2 class="font-semibold text-xl text-gray-800 mb-3 leading-tight">
+        {{ $page.props.title }}
+    </h2>
     <inertia-link :href="route('categories.create')">
         <button
             class="focus:outline-none text-white text-sm py-1.5 px-2.5 bg-gray-700 hover:bg-gray-900 hover:shadow-lg">
@@ -29,7 +33,7 @@
         </table>
     </div>
 
-
+   </div>
 </template>
 
 <script>

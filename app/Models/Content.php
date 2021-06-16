@@ -11,7 +11,7 @@ class Content extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'detail', 'category_id', 'sort', 'status',
+        'name', 'detail', 'category_id', 'sort', 'status', 'page_id',
     ];
 
     /**
