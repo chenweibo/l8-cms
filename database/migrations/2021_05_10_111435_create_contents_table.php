@@ -17,7 +17,7 @@ class CreateContentsTable extends Migration
             $table->id();
             $table->string('name', 100);
             $table->integer('status')->default(1);
-            $table->integer('category_id')->default(null);
+            $table->integer('category_id')->nullable($value = true);
             $table->integer('page_id')->default(null);
             $table->integer('sort')->default(0);
             $table->json('detail')->nullable($value = true);
