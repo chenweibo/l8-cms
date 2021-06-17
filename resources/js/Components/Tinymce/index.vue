@@ -1,7 +1,7 @@
 <template>
     <div class="col-span-8 sm:col-span-6">
         <div>
-            <jet-label for="basic_s" value="富文本编辑器"/>
+            <jet-label :for="content.column" :value="content.label+' ( '+ content.column+' )'"/>
             <div :class="{fullscreen:fullscreen}" :style="{width:containerWidth}" class="tinymce-container mt-2">
                 <textarea :id="tinymceId" class="tinymce-textarea"/>
                 <!--    <div class="editor-custom-btn-container">-->

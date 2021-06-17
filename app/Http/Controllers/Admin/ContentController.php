@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Component;
 use App\Models\Content;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -26,21 +27,23 @@ class ContentController extends Controller
     {
         $nodes = Category::where('url', '!=', '/')->orderBy('sort', 'asc')->get()->toTree();
         $menu = Category::find($menuId);
-        $content = '';
-        $components = '';
         if (! $menu) {
             abort(404);
         }
         if ($menu->type == 2) {
             $content = $menu->article;
-            $components = 'PageFrame';
+            $frameName = 'PageFrame';
+            $component = Component::where('scope', 2)->select('id', 'label', 'column', 'note', 'value', 'type', 'scope')->get();
+
+            return Inertia::render('Contents/List', ['menu' => $nodes, 'component' => $component, 'isIndex' => false, 'menuId' => $menuId, 'content' => $content, 'frameName' => $frameName, 'title' => $menu->name]);
         }
         if ($menu->type == 3) {
             $content = $menu->list;
-            $components = 'ListFrame';
-        }
+            $frameName = 'ListFrame';
+            $component = Component::where('scope', 3)->select('id', 'label', 'column', 'note', 'value', 'type', 'scope')->get();
 
-        return Inertia::render('Contents/List', ['menu' => $nodes, 'isIndex' => false, 'menuId' => $menuId, 'content' => $content, 'component' => $components, 'title'=>$menu->name]);
+            return Inertia::render('Contents/List', ['menu' => $nodes, 'component' => $component, 'isIndex' => false, 'menuId' => $menuId, 'content' => $content, 'frameName' => $frameName, 'title' => $menu->name]);
+        }
     }
 
     /**
@@ -91,11 +94,14 @@ class ContentController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Content $content
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function update(Request $request, Content $content)
     {
-        //
+        $content->detail = $request->detail;
+        $content->save();
+
+        return back();
     }
 
     /**

@@ -31,18 +31,6 @@
                                         <jet-input-error :message="$page.props.errors.name" class="mt-2"/>
 
                                     </div>
-                                    <!--                                    <div class="col-span-6 sm:col-span-4">-->
-                                    <!--                                        <jet-label for="cate" value="所属类目 ( parent_id )"/>-->
-
-                                    <!--                                        &lt;!&ndash;                                                                                <el-cascader&ndash;&gt;-->
-                                    <!--                                        &lt;!&ndash;                                                                                    class="mt-1 w-full"&ndash;&gt;-->
-                                    <!--                                        &lt;!&ndash;                                                                                    v-model="parent"&ndash;&gt;-->
-                                    <!--                                        &lt;!&ndash;                                                                                    :props="props"&ndash;&gt;-->
-                                    <!--                                        &lt;!&ndash;                                                                                    :options="handleCategoryList"&ndash;&gt;-->
-                                    <!--                                        &lt;!&ndash;                                                                                    @change="handleChange"></el-cascader>&ndash;&gt;-->
-                                    <!--                                        <jet-input-error :message="$page.props.errors.parent_id" class="mt-2"/>-->
-
-                                    <!--                                    </div>-->
                                     <div class="col-span-6 sm:col-span-4">
                                         <jet-label for="lx" value="类型选择( 常规：正常为还有子目录的顶级类目 )"/>
                                         <el-radio-group v-model="form.type" class="mt-2" size="mini"
