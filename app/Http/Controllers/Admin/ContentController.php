@@ -38,11 +38,15 @@ class ContentController extends Controller
             return Inertia::render('Contents/List', ['menu' => $nodes, 'component' => $component, 'isIndex' => false, 'menuId' => $menuId, 'content' => $content, 'frameName' => $frameName, 'title' => $menu->name]);
         }
         if ($menu->type == 3) {
-            $content = $menu->list;
+            $keys = $request->keys;
             $frameName = 'ListFrame';
-            $component = Component::where('scope', 3)->select('id', 'label', 'column', 'note', 'value', 'type', 'scope')->get();
-
-            return Inertia::render('Contents/List', ['menu' => $nodes, 'component' => $component, 'isIndex' => false, 'menuId' => $menuId, 'content' => $content, 'frameName' => $frameName, 'title' => $menu->name]);
+            $content = Content::Select('id', 'name', 'status','sort')->where('category_id', $menu->id)
+                ->when($keys, function ($query, $keys) {
+                    return $query->where('name', 'like', '%'.$keys.'%');
+                })
+                ->orderBy('sort', 'asc')->paginate(10)->withQueryString();
+            //dd($content);
+            return Inertia::render('Contents/List', ['menu' => $nodes, 'component' => [], 'isIndex' => false, 'menuId' => $menuId, 'content' => $content, 'frameName' => $frameName, 'title' => $menu->name]);
         }
     }
 

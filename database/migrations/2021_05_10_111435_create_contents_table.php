@@ -16,9 +16,10 @@ class CreateContentsTable extends Migration
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
+            $table->string('redirect')->nullable($value = true);
             $table->integer('status')->default(1);
             $table->integer('category_id')->nullable($value = true);
-            $table->integer('page_id')->default(null);
+            $table->integer('page_id')->nullable($value = true);
             $table->integer('sort')->default(0);
             $table->json('detail')->nullable($value = true);
             $table->timestamps();

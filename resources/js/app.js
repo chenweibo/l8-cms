@@ -20,7 +20,7 @@ import {
     ElRadio,
     ElRadioButton,
     ElRadioGroup,
-    ElAlert
+    ElAlert,ElBreadcrumb, ElBreadcrumbItem
 } from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css';
 
@@ -47,6 +47,8 @@ app.component('ElRadio', ElRadio)
 app.component('ElRadioButton', ElRadioButton)
 app.component('ElRadioGroup', ElRadioGroup)
 app.component('ElAlert', ElAlert)
+app.component('ElBreadcrumb', ElBreadcrumb)
+app.component('ElBreadcrumbItem', ElBreadcrumbItem)
 
 
 app.mixin({methods: {route}})

@@ -11,13 +11,13 @@ class Content extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'detail', 'category_id', 'sort', 'status', 'page_id',
+        'name', 'detail', 'category_id', 'sort', 'status', 'page_id', 'redirect',
     ];
 
     /**
      * 为 array / JSON 序列化准备日期格式.
      *
-     * @param  \DateTimeInterface  $date
+     * @param \DateTimeInterface $date
      * @return string
      */
     protected function serializeDate(DateTimeInterface $date)
@@ -27,5 +27,6 @@ class Content extends Model
 
     protected $casts = [
         'detail' => 'json',
+        'status' => 'boolean',
     ];
 }
