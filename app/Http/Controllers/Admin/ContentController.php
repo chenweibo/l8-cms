@@ -40,7 +40,7 @@ class ContentController extends Controller
         if ($menu->type == 3) {
             $keys = $request->keys;
             $frameName = 'ListFrame';
-            $content = Content::Select('id', 'name', 'status','sort')->where('category_id', $menu->id)
+            $content = Content::Select('id', 'name', 'status', 'sort')->where('category_id', $menu->id)
                 ->when($keys, function ($query, $keys) {
                     return $query->where('name', 'like', '%'.$keys.'%');
                 })
@@ -53,11 +53,19 @@ class ContentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $nodes = Category::where('url', '!=', '/')->orderBy('sort', 'asc')->get()->toTree();
+        $menu = Category::find($request->menuId);
+        if (! $menu) {
+            abort(404);
+        }
+
+        $component = Component::where('scope', 3)->select('id', 'label', 'column', 'note', 'value', 'type', 'scope')->get();
+
+        return Inertia::render('Contents/ListFrom', ['menu' => $nodes, 'component' => $component, 'menuId' => $menu->id, 'title' => $menu->name, 'isEdit' => false]);
     }
 
     /**

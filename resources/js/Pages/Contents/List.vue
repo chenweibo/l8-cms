@@ -73,9 +73,6 @@ export default {
         PageFrame
     },
     methods: {
-        changeMenu() {
-
-        }
     }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <inertia-link :href="route('contents.create')">
+        <inertia-link :href="route('contents.create',{menuId:$page.props.menuId})">
             <button
                 class=" group flex items-center  py-1.5 px-4 bg-gray-700 text-white font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
                 <svg class="group-hover:text-light-blue-600 text-light-blue-500 mr-2" fill="currentColor" height="20"
