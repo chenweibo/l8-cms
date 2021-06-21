@@ -7,7 +7,7 @@ import {InertiaProgress} from '@inertiajs/progress';
 
 // import ElementPlus from 'element-plus';
 //
-import "default-passive-events";
+//import "default-passive-events";
 
 import {
     ElInput,

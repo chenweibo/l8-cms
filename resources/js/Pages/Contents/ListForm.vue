@@ -20,7 +20,6 @@
                     </el-breadcrumb>
                 </div>
 
-
                 <div
                     class="pt-5 px-4 md:min-h-screen mt-5 md:mt-0 bg-white md:col-span-2 border-none border-4 border-gray-600 rounded-lg ">
                     <div class="mt-5 md:mt-0 md:col-span-2 min-h-200">
@@ -29,29 +28,35 @@
                                 <div class="grid grid-cols-6 gap-6">
                                     <div class="col-span-6 sm:col-span-4">
                                         <jet-label for="mc" value="名称（ name ）"/>
-                                        <jet-input id="name" autocomplete="名称" v-model="form.name" class="mt-1 block w-full" type="text"/>
+                                        <jet-input id="name" autocomplete="名称" v-model="form.name"
+                                                   class="mt-1 block w-full" type="text"/>
+                                        <jet-input-error :message="$page.props.errors.name" class="mt-2"/>
                                     </div>
                                     <div class="flex col-span-6 sm:col-span-4">
                                         <div class="mr-10 col-span-6 sm:col-span-4">
                                             <jet-label for="mc" value="所属"/>
                                             <div class="mt-1 ">
-                                                <span class="inline-block bg-gray-50 px-3 py-2.5 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded ">{{$page.props.title}}</span>
+                                                <span
+                                                    class="inline-block bg-gray-50 px-3 py-2.5 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded ">{{ $page.props.title }}</span>
                                             </div>
 
                                         </div>
                                         <div class="mr-10 col-span-6 sm:col-span-4">
                                             <jet-label for="mc" value="排序（ sort ）"/>
-                                            <jet-input id="sort" v-model="form.sort" autocomplete="浏览量" class="mt-1 block w-20" type="text"/>
+                                            <jet-input id="sort" v-model="form.sort" autocomplete="浏览量"
+                                                       class="mt-1 block w-20" type="text"/>
                                         </div>
                                         <div class="mr-10 col-span-6 sm:col-span-4">
                                             <jet-label for="mc" value="浏览量（ views ）"/>
-                                            <jet-input id="views" v-model="form.views" autocomplete="浏览量" class="mt-1 block w-20" type="text"/>
+                                            <jet-input id="views" v-model="form.views" autocomplete="浏览量"
+                                                       class="mt-1 block w-20" type="text"/>
                                         </div>
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-4">
                                         <jet-label for="mc" value="重定向（ redirect ）"/>
-                                        <jet-input id="redirect" autocomplete="重定向" v-model="form.redirect" class="mt-1 block w-full" type="text"/>
+                                        <jet-input id="redirect" autocomplete="重定向" v-model="form.redirect"
+                                                   class="mt-1 block w-full" type="text"/>
                                     </div>
                                     <RenderComponent v-model:content="mergeContent"/>
 
@@ -59,10 +64,12 @@
                                 </div>
                             </div>
                             <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                <jet-button style="margin-right: 10px">
-                                    返回列表
-                                </jet-button>
-                                <jet-button>
+                                <inertia-link   :href="route('contents.handleContent',$page.props.menuId)" >
+                                    <jet-button style="margin-right: 10px">
+                                        返回列表
+                                    </jet-button>
+                                </inertia-link >
+                                <jet-button @click="save">
                                     保存
                                 </jet-button>
                             </div>
@@ -87,16 +94,18 @@ import JetInput from "@/Jetstream/Input";
 import JetLabel from "@/Jetstream/Label";
 import RenderComponent from "@/Components/RenderComponent";
 import JetButton from "@/Jetstream/Button";
+import JetInputError from "@/Jetstream/InputError";
 
 export default {
-    name: "ListFrom",
+    name: "ListForm",
     components: {
         AppLayout,
         Menu,
         JetInput,
         JetLabel,
         RenderComponent,
-        JetButton
+        JetButton,
+        JetInputError,
     },
     data() {
         return {
@@ -105,10 +114,18 @@ export default {
                 name: undefined,
                 detail: {},
                 sort: 0,
-                views:0,
-                redirect: ''
+                views: 0,
+                redirect: '',
+                category_id:this.$page.props.menuId,
             },
             component: this.$page.props.component,
+            isEdit: this.$page.props.isEdit,
+            content:this.$page.props.content,
+        }
+    },
+    created() {
+        if (this.isEdit) {
+            this.form = this.content
         }
     },
     computed: {
@@ -138,6 +155,21 @@ export default {
             return [];
         }
     },
+    methods: {
+        save() {
+            this.form.detail = this.mergeContent;
+            if (this.isEdit) {
+                this.form.menuId = this.$page.props.menuId
+                this.$inertia.put(route('contents.update', this.form.id), this.form)
+
+            } else {
+                this.$inertia.post(route('contents.store'), this.form)
+            }
+        },
+        restForm(){
+
+        }
+    }
 
 }
 </script>

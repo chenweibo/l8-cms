@@ -36,6 +36,10 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
         Route::put('/updateStatus/{category}', [CategoryController::class, 'updateStatus'])->name('categories.updateStatus');
         Route::put('/updateRedirect/{category}', [CategoryController::class, 'updateRedirect'])->name('categories.updateRedirect');
 
+        Route::put('content/updateSort/{content}', [ContentController::class, 'updateSort'])->name('contents.updateSort');
+        Route::put('content/updateStatus/{content}', [ContentController::class, 'updateStatus'])->name('contents.updateStatus');
+        Route::put('content/updateRedirect/{content}', [ContentController::class, 'updateRedirect'])->name('contents.updateRedirect');
+
         Route::post('/admin/categories/generate', [CategoryController::class, 'generateMenu'])->name('categories.generateMenu');
         Route::get('/admin/file', [FilesController::class, 'index'])->name('files.index');
 

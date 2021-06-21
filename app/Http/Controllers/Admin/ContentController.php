@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Component;
 use App\Models\Content;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Validator;
 
 class ContentController extends Controller
 {
@@ -40,11 +43,11 @@ class ContentController extends Controller
         if ($menu->type == 3) {
             $keys = $request->keys;
             $frameName = 'ListFrame';
-            $content = Content::Select('id', 'name', 'status', 'sort')->where('category_id', $menu->id)
+            $content = Content::Select('id', 'name', 'status', 'sort','redirect')->where('category_id', $menu->id)
                 ->when($keys, function ($query, $keys) {
                     return $query->where('name', 'like', '%' . $keys . '%');
                 })
-                ->orderBy('sort', 'asc')->paginate(10)->withQueryString();
+                ->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
             //dd($content);
             return Inertia::render('Contents/List', ['menu' => $nodes, 'component' => [], 'isIndex' => false, 'menuId' => $menuId, 'content' => $content, 'frameName' => $frameName, 'title' => $menu->name]);
         }
@@ -65,18 +68,32 @@ class ContentController extends Controller
 
         $component = Component::where('scope', 3)->select('id', 'label', 'column', 'note', 'value', 'type', 'scope')->get();
 
-        return Inertia::render('Contents/ListFrom', ['menu' => $nodes, 'component' => $component, 'menuId' => $menu->id, 'title' => $menu->name, 'isEdit' => false]);
+        return Inertia::render('Contents/ListForm', ['menu' => $nodes, 'component' => $component, 'menuId' => $menu->id, 'title' => $menu->name, 'isEdit' => false]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        Validator::make(
+            $request->all(),
+            [
+                'name' => ['required', 'string', 'max:255'],
+                'category_id' => ['required'],
+            ],
+            [
+                'name.required' => '名称不能为空',
+                'category_id.required' => '类目不能为空',
+            ]
+        )->validate();
+
+        Content::create($request->all());
+
+        return back();
     }
 
     /**
@@ -94,11 +111,18 @@ class ContentController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\Content $content
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
-    public function edit(Content $content)
+    public function edit(Content $content, Request $request)
     {
-        //
+        $nodes = Category::where('url', '!=', '/')->orderBy('sort', 'asc')->get()->toTree();
+        $menu = Category::find($request->menuId);
+        if (!$menu) {
+            abort(404);
+        }
+        $component = Component::where('scope', 3)->select('id', 'label', 'column', 'note', 'value', 'type', 'scope')->get();
+
+        return Inertia::render('Contents/ListForm', ['menu' => $nodes, 'component' => $component, 'content' => $content, 'menuId' => $menu->id, 'title' => $menu->name, 'isEdit' => true]);
     }
 
     /**
@@ -110,7 +134,57 @@ class ContentController extends Controller
      */
     public function update(Request $request, Content $content)
     {
+        $content->name = $request->name;
+        $content->sort = $request->sort;
+        $content->views = $request->views;
+        $content->redirect = $request->redirect;
         $content->detail = $request->detail;
+        $content->save();
+
+        return Redirect::route('contents.handleContent', $request->menuId);
+    }
+
+    /**
+     * update content redirect.
+     *
+     * @param Request $request
+     * @param Category $category
+     * @return RedirectResponse|\Inertia\Response
+     */
+    public function updateRedirect(Request $request, Content $content)
+    {
+        $content->redirect = $request->redirect;
+        $content->save();
+
+        return back();
+    }
+
+    /**
+     * update content status.
+     *
+     * @param Request $request
+     * @param Category $category
+     * @return RedirectResponse
+     */
+    public function updateStatus(Request $request, Content $content): RedirectResponse
+    {
+       // dd($request->status);
+        $content->status = $request->status;
+        $content->save();
+
+        return back();
+    }
+
+    /**
+     * update content sort.
+     *
+     * @param Request $request
+     * @param Category $category
+     * @return RedirectResponse|\Inertia\Response
+     */
+    public function updateSort(Request $request,  Content $content)
+    {
+        $content->sort = $request->sort;
         $content->save();
 
         return back();
@@ -120,10 +194,12 @@ class ContentController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Models\Content $content
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Content $content)
+    public function destroy(Request $request, Content $content)
     {
-        //
+        $content->delete();
+
+        return back();
     }
 }

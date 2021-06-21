@@ -30,16 +30,17 @@
                 </div>
                 <div class=" p-8 mt-5 md:mt-0 bg-white md:col-span-2 border-none border-4 border-gray-600 rounded-lg ">
 
-                    <inertia-link :href="route('categories.create')">
-                        <button
-                            class="mb-5 group flex items-center  py-1.5 px-4 bg-gray-700 text-white font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
-                            <svg class="group-hover:text-light-blue-600 text-light-blue-500 mr-2" fill="currentColor" height="20"
-                                 width="12">
-                                <path clip-rule="evenodd" d="M6 5a1 1 0 011 1v3h3a1 1 0 110 2H7v3a1 1 0 11-2 0v-3H2a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                      fill-rule="evenodd"/>
-                            </svg>
-                            新增栏目
-                        </button>
+
+                    <inertia-link as="button" :href="route('categories.create')"
+                                  class="mb-5 group flex items-center  py-1.5 px-4 bg-gray-700 text-white font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
+                        <svg class="group-hover:text-light-blue-600 text-light-blue-500 mr-2" fill="currentColor"
+                             height="20"
+                             width="12">
+                            <path clip-rule="evenodd"
+                                  d="M6 5a1 1 0 011 1v3h3a1 1 0 110 2H7v3a1 1 0 11-2 0v-3H2a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                  fill-rule="evenodd"/>
+                        </svg>
+                        新增栏目
                     </inertia-link>
 
 
@@ -96,49 +97,6 @@ export default {
         }
     },
     methods: {
-        sortChange(val, row) {
-            let id = row.id
-            if (isNaN(val)) {
-                this.$notify({
-                    title: '提示',
-                    message: '修改失败，您输入的不是数字。',
-                    type: 'warning'
-                });
-                return false
-            }
-
-            this.$inertia.put(route('categories.updateSort', id), {id: id, sort: val})
-        },
-        reditChange(val, row) {
-            let id = row.id
-
-            this.$inertia.put(route('categories.updateRedirect', id), {id: id, redirect: val})
-        },
-        openDelete(item) {
-            this.tempId = item.id
-            this.show = true
-
-        },
-        handleDelete() {
-            console.log(this.tempId)
-            this.$inertia.delete(route('categories.destroy', this.tempId)).then(res => {
-                this.show = false
-            })
-        },
-        changeStatus(row) {
-            const that = this
-            this.$confirm('此操作将更改栏目状态, 是否继续?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                axios.put(route('categories.updateStatus', row.id), {id: row.id, status: row.status}).then(res => {
-                    row.status = res.data.status
-                });
-            }).catch(() => {
-
-            });
-        },
         generate() {
             axios.post(route('categories.generateMenu'),).then(res => {
                 this.$message({
@@ -150,11 +108,6 @@ export default {
                 this.$message.error('发生异常联系管理员');
 
             });
-        },
-        statusChange($event, item) {
-            const id = item.id
-            const status = $event ? 1 : 0;
-            axios.put(route('categories.updateStatus', id), {id: id, status: status})
         }
     }
 }

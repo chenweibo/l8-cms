@@ -165,21 +165,16 @@ export default {
         sortChange(val, row) {
             let id = row.id
             if (isNaN(val)) {
-                this.$notify({
-                    title: '提示',
-                    message: '修改失败，您输入的不是数字。',
-                    type: 'warning'
-                });
+                alert("修改失败，您输入的不是数字。")
                 return false
             }
 
-            this.$inertia.put(route('categories.updateSort', id), {id: id, sort: val})
+            this.$inertia.put(route('categories.updateSort', id), {id: id, sort: val ? val : 0})
         },
         reditChange(val, row) {
             console.log()
             let id = row.id
-
-            this.$inertia.put(route('categories.updateRedirect', id), {id: id, redirect: val})
+            this.$inertia.put(route('categories.updateRedirect', id), {id: id, redirect: val ? val : ''})
         },
         openDelete(item) {
             //console.log(item)
@@ -194,17 +189,11 @@ export default {
         },
         changeStatus(row) {
             const that = this
-            this.$confirm('此操作将更改栏目状态, 是否继续?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                axios.put(route('categories.updateStatus', row.id), {id: row.id, status: row.status}).then(res => {
-                    row.status = res.data.status
-                });
-            }).catch(() => {
 
+            axios.put(route('categories.updateStatus', row.id), {id: row.id, status: row.status}).then(res => {
+                row.status = res.data.status
             });
+
         },
         generate() {
             axios.post(route('categories.generateMenu'),).then(res => {

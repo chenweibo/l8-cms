@@ -10,13 +10,15 @@
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
 
                 <div class="p-8 mt-5 md:mt-0 bg-white md:col-span-2 border-none border-4 border-gray-600 rounded-lg">
-                    <inertia-link :href="route('accounts.create')">
-                        <button class="mb-5 group flex items-center  py-1.5 px-4 bg-gray-700 text-white font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
-                            <svg class="group-hover:text-light-blue-600 text-light-blue-500 mr-2" width="12" height="20" fill="currentColor">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5a1 1 0 011 1v3h3a1 1 0 110 2H7v3a1 1 0 11-2 0v-3H2a1 1 0 110-2h3V6a1 1 0 011-1z"/>
-                            </svg>
-                            新增账户
-                        </button>
+
+                    <inertia-link as="button" :href="route('accounts.create')"
+                                  class="mb-5 group flex items-center  py-1.5 px-4 bg-gray-700 text-white font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
+                        <svg class="group-hover:text-light-blue-600 text-light-blue-500 mr-2" width="12" height="20"
+                             fill="currentColor">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M6 5a1 1 0 011 1v3h3a1 1 0 110 2H7v3a1 1 0 11-2 0v-3H2a1 1 0 110-2h3V6a1 1 0 011-1z"/>
+                        </svg>
+                        新增账户
                     </inertia-link>
 
                     <div class="bg-white shadow-md rounded my-6 tab-h">
@@ -45,21 +47,25 @@
                                     <div class="flex item-center justify-center">
 
                                         <inertia-link :href="route('accounts.edit',item.id)">
-                                        <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-linecap="round" stroke-linejoin="round"
-                                                      stroke-width="2"/>
-                                            </svg>
-                                        </div>
+                                            <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"/>
+                                                </svg>
+                                            </div>
                                         </inertia-link>
 
                                         <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
                                              @click="openDelete(item)">
                                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                                  xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round"
-                                                      stroke-width="2"/>
+                                                <path
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="2"/>
                                             </svg>
                                         </div>
                                     </div>

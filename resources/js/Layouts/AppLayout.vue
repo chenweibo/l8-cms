@@ -187,17 +187,17 @@
 
                         <div class="mt-3 space-y-1">
                             <jet-responsive-nav-link :href="route('profile.show')" :active="route().current('profile.show')">
-                                Profile
+                                轮廓
                             </jet-responsive-nav-link>
 
                             <jet-responsive-nav-link :href="route('api-tokens.index')" :active="route().current('api-tokens.index')" v-if="$page.props.jetstream.hasApiFeatures">
-                                API Tokens
+                                API 令牌
                             </jet-responsive-nav-link>
 
                             <!-- Authentication -->
                             <form method="POST" @submit.prevent="logout">
                                 <jet-responsive-nav-link as="button">
-                                    Log Out
+                                    登出
                                 </jet-responsive-nav-link>
                             </form>
 
@@ -206,23 +206,23 @@
                                 <div class="border-t border-gray-200"></div>
 
                                 <div class="block px-4 py-2 text-xs text-gray-400">
-                                    Manage Team
+                                    管理团队
                                 </div>
 
                                 <!-- Team Settings -->
                                 <jet-responsive-nav-link :href="route('teams.show', $page.props.user.current_team)" :active="route().current('teams.show')">
-                                    Team Settings
+                                    团队设置
                                 </jet-responsive-nav-link>
 
                                 <jet-responsive-nav-link :href="route('teams.create')" :active="route().current('teams.create')">
-                                    Create New Team
+                                    创建新团队
                                 </jet-responsive-nav-link>
 
                                 <div class="border-t border-gray-200"></div>
 
                                 <!-- Team Switcher -->
                                 <div class="block px-4 py-2 text-xs text-gray-400">
-                                    Switch Teams
+                                    换队
                                 </div>
 
                                 <template v-for="team in $page.props.user.all_teams" :key="team.id">
