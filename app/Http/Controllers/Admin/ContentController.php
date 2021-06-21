@@ -27,7 +27,7 @@ class ContentController extends Controller
     {
         $nodes = Category::where('url', '!=', '/')->orderBy('sort', 'asc')->get()->toTree();
         $menu = Category::find($menuId);
-        if (! $menu) {
+        if (!$menu) {
             abort(404);
         }
         if ($menu->type == 2) {
@@ -42,7 +42,7 @@ class ContentController extends Controller
             $frameName = 'ListFrame';
             $content = Content::Select('id', 'name', 'status', 'sort')->where('category_id', $menu->id)
                 ->when($keys, function ($query, $keys) {
-                    return $query->where('name', 'like', '%'.$keys.'%');
+                    return $query->where('name', 'like', '%' . $keys . '%');
                 })
                 ->orderBy('sort', 'asc')->paginate(10)->withQueryString();
             //dd($content);
@@ -59,7 +59,7 @@ class ContentController extends Controller
     {
         $nodes = Category::where('url', '!=', '/')->orderBy('sort', 'asc')->get()->toTree();
         $menu = Category::find($request->menuId);
-        if (! $menu) {
+        if (!$menu) {
             abort(404);
         }
 

@@ -14,7 +14,6 @@
             </button>
         </inertia-link>
 
-
         <div class="bg-white shadow-md rounded my-4 tab-h" style="min-height: 600px">
             <table class=" w-full table-auto ">
                 <thead>

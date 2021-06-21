@@ -18,6 +18,7 @@ class CreateContentsTable extends Migration
             $table->string('name', 100);
             $table->string('redirect')->nullable($value = true);
             $table->integer('status')->default(1);
+            $table->integer('views')->default(0);
             $table->integer('category_id')->nullable($value = true);
             $table->integer('page_id')->nullable($value = true);
             $table->integer('sort')->default(0);

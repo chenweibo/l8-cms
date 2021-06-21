@@ -7,11 +7,14 @@ import {InertiaProgress} from '@inertiajs/progress';
 
 // import ElementPlus from 'element-plus';
 //
+import "default-passive-events";
 
 import {
     ElInput,
+    ElImage,
     ElButton,
     ElTag,
+    ElDialog,
     ElContainer,
     ElAside,
     ElMain,
@@ -49,6 +52,8 @@ app.component('ElRadioGroup', ElRadioGroup)
 app.component('ElAlert', ElAlert)
 app.component('ElBreadcrumb', ElBreadcrumb)
 app.component('ElBreadcrumbItem', ElBreadcrumbItem)
+app.component('ElImage', ElImage)
+app.component('ElDialog', ElDialog)
 
 
 app.mixin({methods: {route}})

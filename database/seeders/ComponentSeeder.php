@@ -43,8 +43,13 @@ class ComponentSeeder extends Seeder
             ['label' => '页面描述', 'column' => 'description', 'note' => null, 'value' => null, 'type' => 'FormInput', 'scope' => 2, 'created_at' => $now, 'updated_at' => $now],
             ['label' => '内容', 'column' => 'info', 'note' => null, 'value' => null, 'type' => 'Tinymce', 'scope' => 2, 'created_at' => $now, 'updated_at' => $now],
         ];
+        $content = [
+            ['label' => '内容', 'column' => 'info', 'note' => null, 'value' => null, 'type' => 'Tinymce', 'scope' => 3, 'created_at' => $now, 'updated_at' => $now],
+            ['label' => '缩略图', 'column' => 'img', 'note' => null, 'value' => null, 'type' => 'OneUpload', 'scope' => 3, 'created_at' => $now, 'updated_at' => $now],
+            ['label' => '多图上传', 'column' => 'imgList', 'note' => null, 'value' => null, 'type' => 'MultiUpload', 'scope' => 3, 'created_at' => $now, 'updated_at' => $now],
+        ];
 
-        $result = array_merge($basic, $banner, $menu, $page);
+        $result = array_merge($basic, $banner, $menu, $page, $content);
 
         DB::table('components')->insert($result);
     }

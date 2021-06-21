@@ -28,11 +28,33 @@
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 <div class="grid grid-cols-6 gap-6">
                                     <div class="col-span-6 sm:col-span-4">
-                                        <jet-label for="mc" value="名称"/>
-                                        <jet-input id="mc" autocomplete="名称" class="mt-1 block w-full"
-
-                                                   type="text"/>
+                                        <jet-label for="mc" value="名称（ name ）"/>
+                                        <jet-input id="name" autocomplete="名称" v-model="form.name" class="mt-1 block w-full" type="text"/>
                                     </div>
+                                    <div class="flex col-span-6 sm:col-span-4">
+                                        <div class="mr-10 col-span-6 sm:col-span-4">
+                                            <jet-label for="mc" value="所属"/>
+                                            <div class="mt-1 ">
+                                                <span class="inline-block bg-gray-50 px-3 py-2.5 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded ">{{$page.props.title}}</span>
+                                            </div>
+
+                                        </div>
+                                        <div class="mr-10 col-span-6 sm:col-span-4">
+                                            <jet-label for="mc" value="排序（ sort ）"/>
+                                            <jet-input id="sort" v-model="form.sort" autocomplete="浏览量" class="mt-1 block w-20" type="text"/>
+                                        </div>
+                                        <div class="mr-10 col-span-6 sm:col-span-4">
+                                            <jet-label for="mc" value="浏览量（ views ）"/>
+                                            <jet-input id="views" v-model="form.views" autocomplete="浏览量" class="mt-1 block w-20" type="text"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-span-6 sm:col-span-4">
+                                        <jet-label for="mc" value="重定向（ redirect ）"/>
+                                        <jet-input id="redirect" autocomplete="重定向" v-model="form.redirect" class="mt-1 block w-full" type="text"/>
+                                    </div>
+                                    <RenderComponent v-model:content="mergeContent"/>
+
 
                                 </div>
                             </div>
@@ -75,7 +97,48 @@ export default {
         JetLabel,
         RenderComponent,
         JetButton
-    }
+    },
+    data() {
+        return {
+            form: {
+                id: undefined,
+                name: undefined,
+                detail: {},
+                sort: 0,
+                views:0,
+                redirect: ''
+            },
+            component: this.$page.props.component,
+        }
+    },
+    computed: {
+        mergeContent() {
+            const arr = []
+            const that = this
+            if (this.component.length > 0) {
+                _.forEach(this.component, function (value, index) {//这里规定的就是第一个参数返回的是value值，第二个参数是下标index
+                    const id = _.findIndex(that.form.detail, function (o) {
+                        return o.column == value.column;
+                    });
+                    if (id != -1) {
+                        arr.push(that.form.detail[id])
+                    } else {
+                        arr.push(value)
+                    }
+                });
+                return arr
+            }
+        },
+
+        handleViewList() {
+
+            if (this.viewList) {
+                return this.viewList.filter(item => item !== '.' && item !== '..')
+            }
+            return [];
+        }
+    },
+
 }
 </script>
 
