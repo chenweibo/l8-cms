@@ -5,23 +5,13 @@
         </template>
         <template #description>
             设置您的站点基本信息
-            <div class="mt-2.5">
-                <el-alert
-                    :description="'调用方式：{{  system[ \'标签名称\' ]  }}'"
-                    show-icon
-                    title="如何使用"
-                    type="warning">
-                </el-alert>
-            </div>
-
         </template>
         <template #form>
             <RenderComponent v-model:content="mergeContent"/>
         </template>
         <template #actions>
             <jet-action-message :on="form.recentlySuccessful" class="mr-3">
-                已保存。
-            </jet-action-message>
+                已保存。、</jet-action-message>
 
             <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 保存
@@ -57,7 +47,7 @@ export default {
     },
     data() {
         return {
-            recentlySuccessful:false,
+            recentlySuccessful: false,
             content: this.$page.props.basic,
             component: this.$page.props.component,
             form: this.$inertia.form({

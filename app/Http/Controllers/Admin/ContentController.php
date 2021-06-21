@@ -30,7 +30,7 @@ class ContentController extends Controller
     {
         $nodes = Category::where('url', '!=', '/')->orderBy('sort', 'asc')->get()->toTree();
         $menu = Category::find($menuId);
-        if (!$menu) {
+        if (! $menu) {
             abort(404);
         }
         if ($menu->type == 2) {
@@ -43,9 +43,9 @@ class ContentController extends Controller
         if ($menu->type == 3) {
             $keys = $request->keys;
             $frameName = 'ListFrame';
-            $content = Content::Select('id', 'name', 'status', 'sort','redirect')->where('category_id', $menu->id)
+            $content = Content::Select('id', 'name', 'status', 'sort', 'redirect')->where('category_id', $menu->id)
                 ->when($keys, function ($query, $keys) {
-                    return $query->where('name', 'like', '%' . $keys . '%');
+                    return $query->where('name', 'like', '%'.$keys.'%');
                 })
                 ->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
             //dd($content);
@@ -62,7 +62,7 @@ class ContentController extends Controller
     {
         $nodes = Category::where('url', '!=', '/')->orderBy('sort', 'asc')->get()->toTree();
         $menu = Category::find($request->menuId);
-        if (!$menu) {
+        if (! $menu) {
             abort(404);
         }
 
@@ -117,7 +117,7 @@ class ContentController extends Controller
     {
         $nodes = Category::where('url', '!=', '/')->orderBy('sort', 'asc')->get()->toTree();
         $menu = Category::find($request->menuId);
-        if (!$menu) {
+        if (! $menu) {
             abort(404);
         }
         $component = Component::where('scope', 3)->select('id', 'label', 'column', 'note', 'value', 'type', 'scope')->get();
@@ -168,7 +168,7 @@ class ContentController extends Controller
      */
     public function updateStatus(Request $request, Content $content): RedirectResponse
     {
-       // dd($request->status);
+        // dd($request->status);
         $content->status = $request->status;
         $content->save();
 
@@ -182,7 +182,7 @@ class ContentController extends Controller
      * @param Category $category
      * @return RedirectResponse|\Inertia\Response
      */
-    public function updateSort(Request $request,  Content $content)
+    public function updateSort(Request $request, Content $content)
     {
         $content->sort = $request->sort;
         $content->save();
