@@ -89,7 +89,7 @@
             </table>
 
         </div>
-        <Pagination/>
+        <Pagination :total="$page.props.content.total" :current_page="$page.props.content.current_page" :last_page="$page.props.content.last_page" :link="$page.props.content.links"/>
     </div>
 </template>
 
@@ -99,7 +99,7 @@ import Pagination from "@/Components/Pagination/index"
 
 export default {
     name: "ListFrame",
-    components: {Pagination,ElBreadcrumb,ElBreadcrumbItem},
+    components: {Pagination, ElBreadcrumb, ElBreadcrumbItem},
     data() {
         return {
             content: this.$page.props.content.data,
