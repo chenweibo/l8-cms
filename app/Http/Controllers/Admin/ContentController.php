@@ -43,13 +43,13 @@ class ContentController extends Controller
         if ($menu->type == 3) {
             $keys = $request->keys;
             $frameName = 'ListFrame';
-            $content = Content::Select('id', 'name', 'status', 'sort', 'redirect')->where('category_id', $menu->id)
+            $content = Content::Select('id', 'name', 'status', 'sort', 'redirect', 'detail')->where('category_id', $menu->id)
                 ->when($keys, function ($query, $keys) {
                     return $query->where('name', 'like', '%'.$keys.'%');
                 })
                 ->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
             //dd($content);
-            return Inertia::render('Contents/List', ['menu' => $nodes, 'component' => [], 'isIndex' => false, 'menuId' => $menuId, 'content' => $content, 'frameName' => $frameName, 'title' => $menu->name]);
+            return Inertia::render('Contents/List', ['menu' => $nodes, 'component' => [], 'keys'=>$request->keys, 'isIndex' => false, 'menuId' => $menuId, 'content' => $content, 'frameName' => $frameName, 'title' => $menu->name]);
         }
     }
 

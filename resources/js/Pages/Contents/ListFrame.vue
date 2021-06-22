@@ -1,19 +1,27 @@
 <template>
 
     <div>
+        <div class="flex justify-between">
+            <inertia-link :href="route('contents.create',{menuId:$page.props.menuId})"
+                          as="button"
+                          class=" group flex items-center  py-1.5 px-4 bg-gray-700 text-white font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
+                <svg class="group-hover:text-light-blue-600 text-light-blue-500 mr-2" fill="currentColor" height="20"
+                     width="12">
+                    <path clip-rule="evenodd"
+                          d="M6 5a1 1 0 011 1v3h3a1 1 0 110 2H7v3a1 1 0 11-2 0v-3H2a1 1 0 110-2h3V6a1 1 0 011-1z"
+                          fill-rule="evenodd"/>
+                </svg>
+                新增内容
+            </inertia-link>
+            <div class="w-auto ">
+                <jet-input id="name" v-model="search"  type="text" class="mr-1"/>
+                <inertia-link :href="route('contents.handleContent',{menuId:$page.props.menuId,keys:search})"  as="button" class="px-4 py-2 font-medium  text-white  transition-colors duration-200 transform bg-gray-700 rounded-md dark:bg-gray-800 hover:bg-blue-600  focus:outline-none ">
+                    搜索
+                </inertia-link>
+            </div>
 
-        <inertia-link as="button"
-                      :href="route('contents.create',{menuId:$page.props.menuId})"
-                      class=" group flex items-center  py-1.5 px-4 bg-gray-700 text-white font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
-            <svg class="group-hover:text-light-blue-600 text-light-blue-500 mr-2" fill="currentColor" height="20"
-                 width="12">
-                <path clip-rule="evenodd"
-                      d="M6 5a1 1 0 011 1v3h3a1 1 0 110 2H7v3a1 1 0 11-2 0v-3H2a1 1 0 110-2h3V6a1 1 0 011-1z"
-                      fill-rule="evenodd"/>
-            </svg>
-            新增内容
-        </inertia-link>
 
+        </div>
 
         <div class="bg-white shadow-md rounded my-4 tab-h" style="min-height: 600px">
             <table class=" w-full table-auto ">
@@ -55,8 +63,12 @@
                                   style="width: 50px; padding: 0;"
                                   @change="((val)=>{sortChange(val, item)})"></el-input>
                     </td>
-                    <td class="py-3 px-6 text-left whitespace-nowrap">
-                        头像
+                    <td class="py-3 px-6 text-center whitespace-nowrap">
+                        <div class="flex items-center justify-center">
+                            <img
+                                :src="handleDetail(item.detail)"
+                                class="w-6 h-6 rounded-full border-gray-200 border transform hover:scale-125"/>
+                        </div>
                     </td>
                     <td class="py-3 px-6 text-center">
                         <el-switch
@@ -108,8 +120,8 @@
                 </template>
             </ConfirmationModal>
         </div>
-        <Pagination :total="$page.props.content.total" :current_page="$page.props.content.current_page"
-                    :last_page="$page.props.content.last_page" :link="$page.props.content.links"/>
+        <Pagination :current_page="$page.props.content.current_page" :last_page="$page.props.content.last_page"
+                    :link="$page.props.content.links" :total="$page.props.content.total"/>
     </div>
 </template>
 
@@ -119,15 +131,25 @@ import Pagination from "@/Components/Pagination/index"
 import ConfirmationModal from '@/Jetstream/ConfirmationModal'
 import JetDangerButton from "@/Jetstream/DangerButton";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton";
+import JetInput from "@/Jetstream/Input";
 
 export default {
     name: "ListFrame",
-    components: {Pagination, ElBreadcrumb, ElBreadcrumbItem, ConfirmationModal, JetDangerButton, JetSecondaryButton},
+    components: {
+        Pagination,
+        JetInput,
+        ElBreadcrumb,
+        ElBreadcrumbItem,
+        ConfirmationModal,
+        JetDangerButton,
+        JetSecondaryButton
+    },
     data() {
         return {
             content: this.$page.props.content.data,
             total: this.$page.props.content.total,
             last_page: this.$page.props.content.last_page,
+            search:this.$page.props.keys,
             show: false,
             tempId: undefined,
         }
@@ -136,6 +158,23 @@ export default {
 
     },
     methods: {
+        handleDetail(arr) {
+            if (arr && arr.length > 0) {
+                let url = ''
+                _.forEach(arr, function (value, index) {
+                    if (value.column === "img") {
+                        url = value.value
+                        return;
+
+                    }
+                })
+                return url ? url : '/static/common/none.png';
+
+            } else {
+                return '/static/common/none.png';
+            }
+
+        },
         sortChange(val, row) {
             let id = row.id
             if (isNaN(val)) {
