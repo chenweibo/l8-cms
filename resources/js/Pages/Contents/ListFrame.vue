@@ -267,8 +267,8 @@ export default {
             } else {
 
                 this.$notify({
-                    title: '标题名称',
-                    message: h('i', { style: 'color: teal'}, '请选择需要选中的内容')
+                    title: '提示',
+                    message: h('i', { style: 'color: #000'}, '请选择需要选中的内容。')
                 });
             }
         }
