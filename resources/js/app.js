@@ -6,8 +6,7 @@ import {App as InertiaApp, plugin as InertiaPlugin} from '@inertiajs/inertia-vue
 import {InertiaProgress} from '@inertiajs/progress';
 
 // import ElementPlus from 'element-plus';
-//
-//import "default-passive-events";
+
 
 import {
     ElInput,
@@ -23,7 +22,10 @@ import {
     ElRadio,
     ElRadioButton,
     ElRadioGroup,
-    ElAlert,ElBreadcrumb, ElBreadcrumbItem
+    ElAlert,ElBreadcrumb, ElBreadcrumbItem,
+    ElMessage,
+    ElMessageBox,
+    ElNotification,
 } from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css';
 
@@ -55,6 +57,15 @@ app.component('ElBreadcrumbItem', ElBreadcrumbItem)
 app.component('ElImage', ElImage)
 app.component('ElDialog', ElDialog)
 
+const plugins = [
+    ElMessage,
+    ElMessageBox,
+    ElNotification,
+]
+
+plugins.forEach(plugin => {
+    app.use(plugin)
+})
 
 app.mixin({methods: {route}})
     .use(InertiaPlugin)

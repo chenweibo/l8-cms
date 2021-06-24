@@ -30,7 +30,7 @@ class ContentController extends Controller
     {
         $nodes = Category::where('url', '!=', '/')->orderBy('sort', 'asc')->get()->toTree();
         $menu = Category::find($menuId);
-        if (! $menu) {
+        if (!$menu) {
             abort(404);
         }
         if ($menu->type == 2) {
@@ -45,11 +45,11 @@ class ContentController extends Controller
             $frameName = 'ListFrame';
             $content = Content::Select('id', 'name', 'status', 'sort', 'redirect', 'detail')->where('category_id', $menu->id)
                 ->when($keys, function ($query, $keys) {
-                    return $query->where('name', 'like', '%'.$keys.'%');
+                    return $query->where('name', 'like', '%' . $keys . '%');
                 })
                 ->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
             //dd($content);
-            return Inertia::render('Contents/List', ['menu' => $nodes, 'component' => [], 'keys'=>$request->keys, 'isIndex' => false, 'menuId' => $menuId, 'content' => $content, 'frameName' => $frameName, 'title' => $menu->name]);
+            return Inertia::render('Contents/List', ['menu' => $nodes, 'component' => [], 'keys' => $request->keys, 'isIndex' => false, 'menuId' => $menuId, 'content' => $content, 'frameName' => $frameName, 'title' => $menu->name]);
         }
     }
 
@@ -62,7 +62,7 @@ class ContentController extends Controller
     {
         $nodes = Category::where('url', '!=', '/')->orderBy('sort', 'asc')->get()->toTree();
         $menu = Category::find($request->menuId);
-        if (! $menu) {
+        if (!$menu) {
             abort(404);
         }
 
@@ -117,7 +117,7 @@ class ContentController extends Controller
     {
         $nodes = Category::where('url', '!=', '/')->orderBy('sort', 'asc')->get()->toTree();
         $menu = Category::find($request->menuId);
-        if (! $menu) {
+        if (!$menu) {
             abort(404);
         }
         $component = Component::where('scope', 3)->select('id', 'label', 'column', 'note', 'value', 'type', 'scope')->get();
@@ -200,6 +200,12 @@ class ContentController extends Controller
     {
         $content->delete();
 
+        return back();
+    }
+
+    public function moreDelete(Request $request)
+    {
+        Content::destroy(collect($request->ids));
         return back();
     }
 }

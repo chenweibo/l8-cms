@@ -59,6 +59,9 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
 
         Route::get('/admin/contents/{menuId}', [ContentController::class, 'handleContent'])->name('contents.handleContent');
 
+        Route::post('/admin/contents/deleteMore', [ContentController::class, 'moreDelete'])->name('contents.moreDelete');
+
+
         Route::resources([
             'banners' => BannerController::class,
             'categories' => CategoryController::class,
