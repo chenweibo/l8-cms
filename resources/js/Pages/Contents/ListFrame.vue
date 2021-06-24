@@ -37,14 +37,18 @@
 
 
         </div>
-        {{ selectIds }}
 
         <div class="bg-white shadow-md rounded my-4 tab-h" style="min-height: 600px">
             <table class=" w-full table-auto ">
                 <thead>
                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                     <th class="py-3 px-6 text-center">
-                        <Checkbox :checked="allBox" :val="-1" v-on:box-change="boxChange"/>
+                        <input
+                            @click="boxChange"
+                            v-model="allBox"
+                            class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            type="checkbox">
+
                     </th>
                     <th class="py-3 px-6 text-left">id</th>
                     <th class="py-3 px-6 text-left">名称</th>
@@ -60,7 +64,10 @@
                 <tr v-for="(item,k) in $page.props.content.data" :key="k"
                     class="border-b border-gray-200 hover:bg-gray-100">
                     <td class="py-3 px-6 text-center">
-                        <Checkbox :checked="ids[k]" :val="item.id" v-on:box-change="boxChange"/>
+                        <input v-model="selectIds" :value="item.id"
+                               class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                               type="checkbox">
+
                     </td>
 
                     <td class="py-3 px-6 text-left whitespace-nowrap">
@@ -155,8 +162,7 @@ import ConfirmationModal from '@/Jetstream/ConfirmationModal'
 import JetDangerButton from "@/Jetstream/DangerButton";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton";
 import JetInput from "@/Jetstream/Input";
-import Checkbox from "@/Jetstream/Checkbox";
-import { h } from 'vue';
+import {h} from 'vue';
 
 export default {
     name: "ListFrame",
@@ -168,7 +174,6 @@ export default {
         ConfirmationModal,
         JetDangerButton,
         JetSecondaryButton,
-        Checkbox
     },
     data() {
         return {
@@ -183,7 +188,7 @@ export default {
                 return false
             }),
             selectIds: [],
-            allBox:false
+            allBox: false
         }
     },
     created() {
@@ -234,49 +239,33 @@ export default {
             this.show = false
         },
         boxChange(v, status) {
-            if (status === -1 && v === true) {
-                this.ids = new Array(this.$page.props.content.per_page).fill().map((item, index) => {
-                    return true
-                })
+            console.log(v.toElement.checked)
+            if (v.toElement.checked) {
                 let temp = []
-                _.forEach(this.content, function (value, key) {
+                _.forEach(this.$page.props.content.data, function (value, key) {
                     temp.push(value.id)
                 });
                 this.selectIds = temp
-            }
-            if (status === -1 && v === false) {
-                this.ids = new Array(this.$page.props.content.per_page).fill().map((item, index) => {
-                    return false
-                })
+            } else {
                 this.selectIds = []
-            }
-            if (status !== -1) {
-                if (v) {
-                    this.selectIds.push(status)
-                } else {
-                    _.pull(this.selectIds, status);
-                }
-
             }
         },
         moreDelete() {
+            const that = this
             if (this.selectIds.length > 0) {
-                this.$inertia.post(route('contents.moreDelete'),{ids:this.selectIds},
+
+                this.$inertia.post(route('contents.moreDelete'), {ids: this.selectIds, menuId: this.$page.props.menuId},
                     {
                         onSuccess: () => {
-                            this.ids = new Array(this.$page.props.content.data.length).fill().map((item, index) => {
-                                return false
-                            })
-                            this.selectIds=[]
+                            this.selectIds = []
                             this.allBox = false
                         },
                     }
                 )
+
+
             } else {
-                this.$notify({
-                    title: '提示',
-                    message: h('i', { style: 'color: teal'}, '请选择需要操作的内容。')
-                });
+                alert("请选择需要操作的内容。")
             }
         }
 

@@ -1,5 +1,5 @@
 <template>
-    <input v-model="checked" :value="value"
+    <input v-model="z" :value="value"
            @click="selectBox"
            class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
            type="checkbox">
@@ -11,7 +11,7 @@ export default {
 
     props: {
         checked: {
-            type: [Array, Boolean],
+            type: [ Boolean],
             default: false,
         },
         value: {
@@ -34,10 +34,14 @@ export default {
             },
         },
     },
+    data(){
+      z:this.checked
+    },
     methods: {
         selectBox(){
             this.$emit("box-change", !this.checked,this.val);
-            //this.$emit("update:checked", !this.checked);
+
+            console.log(this.checked)
         }
     },
     watch: {}
