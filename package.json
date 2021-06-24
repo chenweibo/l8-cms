@@ -29,7 +29,7 @@
     },
     "dependencies": {
         "default-passive-events": "^2.0.0",
-        "element-plus": "^1.0.2-beta.44",
+        "element-plus": "^1.0.2-beta.52",
         "vue-upload-component": "^3.0.50"
     }
 }
