@@ -54,13 +54,12 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
         Route::post('/admin/accounts', [AccountController::class, 'store'])->name('accounts.store');
         Route::put('/admin/accounts/{user}', [AccountController::class, 'update'])->name('accounts.update');
         Route::delete('/admin/accounts/{user}', [AccountController::class, 'destroy'])->name('accounts.destroy');
-
         Route::post('/admin/adminLogout', [AccountController::class, 'adminLogout'])->name('logout.admin');
-
         Route::get('/admin/contents/{menuId}', [ContentController::class, 'handleContent'])->name('contents.handleContent');
-
         Route::post('/admin/contents/deleteMore', [ContentController::class, 'moreDelete'])->name('contents.moreDelete');
+        Route::get('/admin/categories/flatTree', [CategoryController::class, 'categoryFlatTree'])->name('categories.flatTree');
 
+        Route::get('/contents/move', [ContentController::class, 'moveContent'])->name('contents.move');
 
         Route::resources([
             'banners' => BannerController::class,

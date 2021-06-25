@@ -30,6 +30,15 @@ class CategoryController extends Controller
         return Inertia::render('Categories/Index', ['categoryList' => $nodes]);
     }
 
+    public function categoryFlatTree(): \Illuminate\Http\JsonResponse
+    {
+        $nodes = Category::where('type', 3)->orderBy('sort', 'asc')->get()->toFlatTree();
+
+        return response()->json([
+            'category' => $nodes,
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

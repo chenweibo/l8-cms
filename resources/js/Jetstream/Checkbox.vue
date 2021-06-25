@@ -1,26 +1,20 @@
 <template>
-    <input v-model="z" :value="value"
-           @click="selectBox"
-           class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-           type="checkbox">
+    <input type="checkbox" :value="value" v-model="proxyChecked"
+           class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
 </template>
 
 <script>
 export default {
-    emits: ['update:checked','box-change'],
+    emits: ['update:checked'],
 
     props: {
         checked: {
-            type: [ Boolean],
+            type: [Array, Boolean],
             default: false,
         },
         value: {
             default: null,
         },
-        val: {
-            type: Number,
-            default: 0
-        }
     },
 
     computed: {
@@ -29,21 +23,10 @@ export default {
                 return this.checked;
             },
 
-            set(v) {
-                this.$emit("update:checked", v);
+            set(val) {
+                this.$emit("update:checked", val);
             },
         },
     },
-    data(){
-      z:this.checked
-    },
-    methods: {
-        selectBox(){
-            this.$emit("box-change", !this.checked,this.val);
-
-            console.log(this.checked)
-        }
-    },
-    watch: {}
 }
 </script>

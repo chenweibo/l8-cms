@@ -16,7 +16,8 @@
                     新增内容
                 </inertia-link>
                 <button
-                    class="mr-1 group flex items-center  py-1.5 px-4 bg-gray-700 text-white font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
+                    class="mr-1 group flex items-center  py-1.5 px-4 bg-gray-700 text-white font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+                    @click="move">
                     产品移动
                 </button>
                 <button
@@ -39,15 +40,15 @@
         </div>
 
         <div class="bg-white shadow-md rounded my-4 tab-h" style="min-height: 600px">
-            <table class=" w-full table-auto ">
+            <table class="table w-full table-auto ">
                 <thead>
                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                     <th class="py-3 px-6 text-center">
                         <input
-                            @click="boxChange"
                             v-model="allBox"
                             class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            type="checkbox">
+                            type="checkbox"
+                            @click="boxChange">
 
                     </th>
                     <th class="py-3 px-6 text-left">id</th>
@@ -131,6 +132,30 @@
                 </tbody>
             </table>
 
+            <el-dialog
+                v-model="dialogVisible"
+                title="转移产品"
+                width="30%">
+                <span style="margin-right: 10px">选择移动的分类</span>
+                <el-select v-model="moveMenuId" placeholder="请选择">
+                    <el-option
+                        v-for="item in categoryFlatTree"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id">
+                    </el-option>
+                </el-select>
+
+                <template #footer>
+                        <span class="dialog-footer">
+                          <el-button @click="dialogVisible = false">取 消</el-button>
+                          <el-button type="primary" @click="moveConfirm">确 定</el-button>
+                        </span>
+                </template>
+
+            </el-dialog>
+
+
             <ConfirmationModal :show="show">
                 <template #title>
                     删除内容
@@ -150,33 +175,31 @@
                 </template>
             </ConfirmationModal>
         </div>
+
         <Pagination :current_page="$page.props.content.current_page" :last_page="$page.props.content.last_page"
                     :link="$page.props.content.links" :total="$page.props.content.total"/>
     </div>
 </template>
 
 <script>
-import {ElBreadcrumb, ElBreadcrumbItem} from 'element-plus';
 import Pagination from "@/Components/Pagination/index"
 import ConfirmationModal from '@/Jetstream/ConfirmationModal'
 import JetDangerButton from "@/Jetstream/DangerButton";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton";
 import JetInput from "@/Jetstream/Input";
-import {h} from 'vue';
 
 export default {
     name: "ListFrame",
     components: {
         Pagination,
         JetInput,
-        ElBreadcrumb,
-        ElBreadcrumbItem,
         ConfirmationModal,
         JetDangerButton,
         JetSecondaryButton,
     },
     data() {
         return {
+            dialogVisible: false,
             content: this.$page.props.content.data,
             total: this.$page.props.content.total,
             last_page: this.$page.props.content.last_page,
@@ -188,7 +211,9 @@ export default {
                 return false
             }),
             selectIds: [],
-            allBox: false
+            moveMenuId: undefined,
+            allBox: false,
+            categoryFlatTree: []
         }
     },
     created() {
@@ -239,7 +264,7 @@ export default {
             this.show = false
         },
         boxChange(v, status) {
-            console.log(v.toElement.checked)
+            //console.log(v.toElement.checked)
             if (v.toElement.checked) {
                 let temp = []
                 _.forEach(this.$page.props.content.data, function (value, key) {
@@ -265,12 +290,44 @@ export default {
 
 
             } else {
-
-                this.$notify({
-                    title: '提示',
-                    message: h('i', { style: 'color: #000'}, '请选择需要选中的内容。')
+                this.$message.error({
+                    message: '警告哦，未选择任何内容。',
+                    type: 'warning'
                 });
+
             }
+        },
+        move() {
+            if (this.selectIds.length <= 0) {
+                this.$message.error({
+                    message: '警告哦，未选择任何内容。',
+                    type: 'warning'
+                });
+                return false;
+            }
+            axios.get(route('categories.flatTree')).then(res => {
+                let {data} = res
+                this.categoryFlatTree = data.category
+                this.dialogVisible = true
+            })
+        },
+        moveConfirm() {
+            if (!this.moveMenuId){
+                this.$message.error({
+                    message: '警告哦，请选择类目。',
+                    type: 'warning'
+                });
+                return false;
+            }
+            this.$inertia.get(route('contents.move'), {ids: this.selectIds, menuId: this.$page.props.menuId,moveId:this.moveMenuId},
+                {
+                    onSuccess: () => {
+                        this.selectIds = []
+                        this.allBox = false
+                    },
+                }
+            )
+
         }
 
     }
@@ -278,7 +335,7 @@ export default {
 </script>
 
 <style scoped>
-:deep(.el-input__inner) {
+.table > :deep(.el-input__inner) {
     height: 2em;
 }
 </style>

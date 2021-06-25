@@ -30,7 +30,7 @@ class ContentController extends Controller
     {
         $nodes = Category::where('url', '!=', '/')->orderBy('sort', 'asc')->get()->toTree();
         $menu = Category::find($menuId);
-        if (!$menu) {
+        if (! $menu) {
             abort(404);
         }
         if ($menu->type == 2) {
@@ -45,7 +45,7 @@ class ContentController extends Controller
             $frameName = 'ListFrame';
             $content = Content::Select('id', 'name', 'status', 'sort', 'redirect', 'detail')->where('category_id', $menu->id)
                 ->when($keys, function ($query, $keys) {
-                    return $query->where('name', 'like', '%' . $keys . '%');
+                    return $query->where('name', 'like', '%'.$keys.'%');
                 })
                 ->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
             //dd($content);
@@ -62,7 +62,7 @@ class ContentController extends Controller
     {
         $nodes = Category::where('url', '!=', '/')->orderBy('sort', 'asc')->get()->toTree();
         $menu = Category::find($request->menuId);
-        if (!$menu) {
+        if (! $menu) {
             abort(404);
         }
 
@@ -117,7 +117,7 @@ class ContentController extends Controller
     {
         $nodes = Category::where('url', '!=', '/')->orderBy('sort', 'asc')->get()->toTree();
         $menu = Category::find($request->menuId);
-        if (!$menu) {
+        if (! $menu) {
             abort(404);
         }
         $component = Component::where('scope', 3)->select('id', 'label', 'column', 'note', 'value', 'type', 'scope')->get();
@@ -203,9 +203,21 @@ class ContentController extends Controller
         return back();
     }
 
-    public function moreDelete(Request $request)
+    public function moreDelete(Request $request): RedirectResponse
     {
         Content::destroy(collect($request->ids));
+
+        return back();
+    }
+
+    public function moveContent(Request $request)
+    {
+        $content = Content::find($request->ids);
+        foreach ($content as $notice) {
+            $notice->category_id = $request->moveId;
+            $notice->save();
+        }
+
         return back();
     }
 }
