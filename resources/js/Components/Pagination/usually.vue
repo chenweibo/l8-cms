@@ -36,7 +36,9 @@
                         <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
                         <!--                 no cur       bg-white border-gray-300  text-gray-500 hover:bg-gray-50-->
                         <!--                  cur      z-10 bg-indigo-50 border-indigo-500 text-indigo-600-->
-                        <inertia-link v-for="(v,key) in last_page" :key="key" :class="{'z-10 bg-indigo-50 border-indigo-500 text-indigo-600':key+1===current_page}" :href="generateLink(key + 1)"
+                        <inertia-link v-for="(v,key) in last_page" :key="key"
+                                      :class="{'z-10 bg-indigo-50 border-indigo-500 text-indigo-600':key+1===current_page}"
+                                      :href="generateLink(key + 1)"
                                       as="a"
                                       class="bg-white border-gray-300  text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
                         >
@@ -64,7 +66,7 @@
 
 <script>
 export default {
-    name: "Pagination",
+    name: "usually",
     props: {
         "current_page": {
             type: Number,
@@ -79,6 +81,10 @@ export default {
         total: {
             type: Number,
             default: 0
+        },
+        url: {
+            type: String,
+            default: ''
         },
         "last_page": {
             type: Number,
@@ -95,7 +101,7 @@ export default {
     },
     methods: {
         generateLink(page) {
-            return route('contents.handleContent', {page: page, menuId: this.$page.props.menuId})
+            return route(this.url, {page: page})
         }
     }
 

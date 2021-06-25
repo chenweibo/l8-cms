@@ -36,7 +36,6 @@
                 </inertia-link>
             </div>
 
-
         </div>
 
         <div class="bg-white shadow-md rounded my-4 tab-h" style="min-height: 600px">
@@ -312,14 +311,18 @@ export default {
             })
         },
         moveConfirm() {
-            if (!this.moveMenuId){
+            if (!this.moveMenuId) {
                 this.$message.error({
                     message: '警告哦，请选择类目。',
                     type: 'warning'
                 });
                 return false;
             }
-            this.$inertia.get(route('contents.move'), {ids: this.selectIds, menuId: this.$page.props.menuId,moveId:this.moveMenuId},
+            this.$inertia.get(route('contents.move'), {
+                    ids: this.selectIds,
+                    menuId: this.$page.props.menuId,
+                    moveId: this.moveMenuId
+                },
                 {
                     onSuccess: () => {
                         this.selectIds = []

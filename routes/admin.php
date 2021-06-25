@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ComponentController;
 use App\Http\Controllers\Admin\ContentController;
 use App\Http\Controllers\Admin\FilesController;
+use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ToolsController;
 use App\Http\Controllers\Admin\UploadsController;
 use Illuminate\Support\Facades\Route;
@@ -66,6 +67,9 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
             'categories' => CategoryController::class,
             'contents' => ContentController::class,
             'components' => ComponentController::class,
+        ]);
+        Route::resource('messages', MessageController::class)->only([
+            'index', 'show', 'destroy',
         ]);
     });
 });
