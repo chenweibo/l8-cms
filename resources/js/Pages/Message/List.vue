@@ -13,16 +13,18 @@
 
                     <div class="flex justify-between">
                         <div class="left flex">
-                            <button
-                                class="mr-1 group flex items-center  py-1.5 px-4 bg-gray-700 text-white font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+                            <inertia-link :href="route('messages.allRead')"
+                                          as="button"
+                                          class="mr-1 group flex items-center  py-1.5 px-4 bg-gray-700 text-white font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
                             >
                                 一键已读
-                            </button>
-                            <button
-                                class=" group flex items-center  py-1.5 px-4 bg-gray-700 text-white font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+                            </inertia-link>
+                            <inertia-link :href="route('messages.allDelete')"
+                                          as="button"
+                                          class=" group flex items-center  py-1.5 px-4 bg-gray-700 text-white font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
                             >
                                 一键清空
-                            </button>
+                            </inertia-link>
                         </div>
                     </div>
                     <div class="bg-white shadow-md rounded my-6 tab-h">
@@ -56,17 +58,18 @@
                                 <td class="py-3 px-6 text-center">
                                     <div class="flex item-center justify-center">
                                         <div class="flex inline-flex mr-2" role="group">
-                                            <button
-                                                class="focus:outline-none text-white text-sm py-1.5 px-2.5 bg-gray-500 rounded-l-md hover:bg-gray-600 hover:shadow-lg"
-                                                type="button">
+                                            <inertia-link :href="route('messages.show',item.id)"
+                                                          as="button"
+                                                          class="focus:outline-none text-white text-sm py-1.5 px-2.5 bg-gray-500 rounded-l-md hover:bg-gray-600 hover:shadow-lg"
+                                            >
                                                 查看
-                                            </button>
-
-                                            <button
-                                                class="focus:outline-none text-white text-sm py-1.5 px-2.5 bg-red-500 hover:bg-red-600 rounded-r-md  hover:shadow-lg"
+                                            </inertia-link>
+                                            <inertia-link :href="route('messages.destroy',item.id)" as="button"
+                                                          class="focus:outline-none text-white text-sm py-1.5 px-2.5 bg-red-500 hover:bg-red-600 rounded-r-md  hover:shadow-lg"
+                                                          method="delete"
                                             >
                                                 删除
-                                            </button>
+                                            </inertia-link>
                                         </div>
                                     </div>
                                 </td>

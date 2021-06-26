@@ -12,9 +12,7 @@ use App\Http\Controllers\Admin\ToolsController;
 use App\Http\Controllers\Admin\UploadsController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia\Inertia::render('Dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [BasicController::class, 'dashboard'])->name('dashboard');
 
 \LaravelUploader::routes([
     'as' => 'files.upload',
@@ -61,6 +59,9 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
         Route::get('/admin/categories/flatTree', [CategoryController::class, 'categoryFlatTree'])->name('categories.flatTree');
 
         Route::get('/contents/move', [ContentController::class, 'moveContent'])->name('contents.move');
+
+        Route::get('/admin/message/allRead', [MessageController::class, 'allRead'])->name('messages.allRead');
+        Route::get('/admin/message/allDelete', [MessageController::class, 'allDelete'])->name('messages.allDelete');
 
         Route::resources([
             'banners' => BannerController::class,

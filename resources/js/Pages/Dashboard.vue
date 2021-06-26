@@ -23,7 +23,7 @@
                                         </svg>
                                     </div>
                                     <div class="mx-5">
-                                        <h4 class="text-2xl font-semibold text-gray-700">10</h4>
+                                        <h4 class="text-2xl font-semibold text-gray-700">{{$page.props.admin}}</h4>
                                         <div class="text-gray-500">管理员数量</div>
                                     </div>
                                 </div>
@@ -43,7 +43,7 @@
                                         </svg>
                                     </div>
                                     <div class="mx-5">
-                                        <h4 class="text-2xl font-semibold text-gray-700">10</h4>
+                                        <h4 class="text-2xl font-semibold text-gray-700">{{$page.props.page}}</h4>
                                         <div class="text-gray-500">单篇文章</div>
                                     </div>
                                 </div>
@@ -67,7 +67,7 @@
                                         </svg>
                                     </div>
                                     <div class="mx-5">
-                                        <h4 class="text-2xl font-semibold text-gray-700">20</h4>
+                                        <h4 class="text-2xl font-semibold text-gray-700">{{$page.props.content}}</h4>
                                         <div class="text-gray-500">列表内容</div>
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@
                                         </svg>
                                     </div>
                                     <div class="mx-5">
-                                        <h4 class="text-2xl font-semibold text-gray-700">900</h4>
+                                        <h4 class="text-2xl font-semibold text-gray-700">{{$page.props.read}}</h4>
                                         <div class="text-gray-500">留言</div>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
                                         </svg>
                                     </div>
                                     <div class="mx-5">
-                                        <h4 class="text-2xl font-semibold text-gray-700">10</h4>
+                                        <h4 class="text-2xl font-semibold text-gray-700">{{$page.props.no_read}}</h4>
                                         <div class="text-gray-500">未读留言</div>
                                     </div>
                                 </div>
@@ -119,7 +119,7 @@
 
                                     </div>
                                     <div class="mx-5">
-                                        <h4 class="text-2xl font-semibold text-gray-700">10</h4>
+                                        <h4 class="text-2xl font-semibold text-gray-700">{{$page.props.component}}</h4>
                                         <div class="text-gray-500">自定义组件</div>
                                     </div>
                                 </div>

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Component;
 use App\Models\Config;
+use App\Models\Content;
+use App\Models\Message;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Redirect;
 
@@ -51,5 +53,17 @@ class BasicController extends Controller
         //dd($request->options);
 
         return Redirect::route('basic.show');
+    }
+
+    public function dashboard(): \Inertia\Response
+    {
+        $page = Content::where('page_id', '!=', null)->count();
+        $content = Content::where('category_id', '!=', null)->count();
+        $admin = User::count();
+        $component = Component::count();
+        $read = Message::count();
+        $no_read = Message::where('is_read', 0)->count();
+
+        return Inertia::render('Dashboard', ['no_read' => $no_read, 'read' => $read, 'component' => $component, 'content' => $content, 'page' => $page, 'admin' => $admin]);
     }
 }
