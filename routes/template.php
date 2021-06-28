@@ -9,3 +9,4 @@ Route::get('about', [BusinessController::class, 'page']);
 Route::get('product/{id?}', [BusinessController::class, 'list']);
 Route::get('productView/{id?}', [BusinessController::class, 'listView']);
 Route::get('zzzz', [BusinessController::class, 'page']);
+Route::get('text', [BusinessController::class, 'text']);
