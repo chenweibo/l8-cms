@@ -35,7 +35,7 @@
                                         <jet-label for="lx" value="类型选择( 常规：正常为还有子目录的顶级类目 )"/>
                                         <el-radio-group v-model="form.type" class="mt-2" size="mini"
                                                         v-bind:disabled="isEdit">
-                                            <el-radio-button v-for="(v,k) in categoryType" :key="k" :label="v.value">
+                                            <el-radio-button v-for="(v,k) in categoryType" :key="k"  :label="v.value">
                                                 {{ v.label }}
                                             </el-radio-button>
                                         </el-radio-group>

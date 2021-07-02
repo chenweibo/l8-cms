@@ -57,10 +57,12 @@ export function conver(limit) {
     return sizestr;
 }
 
-export const categoryType = [{label: '常规', value: "0"}, {label: '单页', value: "1"}, {
+export const categoryType = [
+    {label: '常规', value: "0"}, {label: '单页', value: "1"}, {
     label: '列表',
     value: "2"
-}, {label: '自定义', value: "3"}]
+},
+    {label: '自定义', value: "3"}]
 
 
 export function handleMergeContent(content, component) {
