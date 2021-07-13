@@ -7,6 +7,7 @@ import {InertiaProgress} from '@inertiajs/progress';
 
 import ElementPlus from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
+import 'github-markdown-css/github-markdown.css'
 
 
 const el = document.getElementById('app');

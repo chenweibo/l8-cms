@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\FilesController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ToolsController;
 use App\Http\Controllers\Admin\UploadsController;
+use App\Http\Controllers\Admin\DocController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [BasicController::class, 'dashboard'])->name('dashboard');
@@ -72,5 +73,6 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
         Route::resource('messages', MessageController::class)->only([
             'index', 'show', 'destroy',
         ]);
+        Route::get('/admin/doc/index', [DocController::class, 'index'])->name('doc.index');
     });
 });

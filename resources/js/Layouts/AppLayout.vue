@@ -38,15 +38,20 @@
                                 <jet-nav-link :active="route().current('messages.*')" :href="route('messages.index')">
                                     留言管理
                                 </jet-nav-link>
-                                <jet-nav-link v-if="$page.props.user.isAdmin ==1" :active="route().current('components.*')"
+                                <jet-nav-link v-if="$page.props.user.isAdmin ==1"
+                                              :active="route().current('components.*')"
                                               :href="route('components.index')">
                                     组件设置
                                 </jet-nav-link>
-                                <jet-nav-link v-if="$page.props.user.isAdmin ==1" :active="route().current('accounts.*')"
+                                <jet-nav-link v-if="$page.props.user.isAdmin ==1"
+                                              :active="route().current('accounts.*')"
                                               :href="route('accounts.index')">
                                     账户管理
                                 </jet-nav-link>
-
+                                <jet-nav-link v-if="$page.props.user.isAdmin ==1" :active="route().current('doc.*')"
+                                              :href="route('doc.index')">
+                                    调用文档
+                                </jet-nav-link>
                             </div>
                         </div>
 
@@ -56,8 +61,9 @@
                                 <jet-dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
-                                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition"
-                                                    type="button">
+                                            <button
+                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition"
+                                                type="button">
                                                 {{ $page.props.user.current_team.name }}
 
                                                 <svg class="ml-2 -mr-0.5 h-4 w-4" fill="currentColor"
@@ -131,8 +137,9 @@
                                         </button>
 
                                         <span v-else class="inline-flex rounded-md">
-                                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition"
-                                                    type="button">
+                                            <button
+                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition"
+                                                type="button">
                                                 {{ $page.props.user.name }}
 
                                                 <svg class="ml-2 -mr-0.5 h-4 w-4" fill="currentColor"
@@ -175,8 +182,9 @@
 
                         <!-- Hamburger -->
                         <div class="-mr-2 flex items-center sm:hidden">
-                            <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition"
-                                    @click="showingNavigationDropdown = ! showingNavigationDropdown">
+                            <button
+                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition"
+                                @click="showingNavigationDropdown = ! showingNavigationDropdown">
                                 <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path
                                         :class="{'hidden': showingNavigationDropdown, 'inline-flex': ! showingNavigationDropdown }"
@@ -213,7 +221,8 @@
                         <div class="flex items-center px-4">
                             <div v-if="$page.props.jetstream.managesProfilePhotos" class="flex-shrink-0 mr-3">
                                 <img :alt="$page.props.user.name"
-                                     :src="$page.props.user.profile_photo_url" class="h-10 w-10 rounded-full object-cover"/>
+                                     :src="$page.props.user.profile_photo_url"
+                                     class="h-10 w-10 rounded-full object-cover"/>
                             </div>
 
                             <div>
@@ -273,7 +282,8 @@
                                             <div class="flex items-center">
                                                 <svg v-if="team.id == $page.props.user.current_team_id"
                                                      class="mr-2 h-5 w-5 text-green-400" fill="none"
-                                                     stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                     stroke="currentColor" stroke-linecap="round"
+                                                     stroke-linejoin="round"
                                                      stroke-width="2" viewBox="0 0 24 24">
                                                     <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                 </svg>
