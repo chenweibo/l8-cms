@@ -33,14 +33,15 @@ class ContentController extends Controller
         if (! $menu) {
             abort(404);
         }
-        if ($menu->type == 2) {
+
+        if ($menu->type == 1) {
             $content = $menu->article;
             $frameName = 'PageFrame';
             $component = Component::where('scope', 2)->select('id', 'label', 'column', 'note', 'value', 'type', 'scope')->get();
 
             return Inertia::render('Contents/List', ['menu' => $nodes, 'component' => $component, 'isIndex' => false, 'menuId' => $menuId, 'content' => $content, 'frameName' => $frameName, 'title' => $menu->name]);
         }
-        if ($menu->type == 3) {
+        if ($menu->type == 2) {
             $keys = $request->keys;
             $frameName = 'ListFrame';
             $content = Content::Select('id', 'name', 'status', 'sort', 'redirect', 'detail')->where('category_id', $menu->id)
@@ -48,7 +49,6 @@ class ContentController extends Controller
                     return $query->where('name', 'like', '%'.$keys.'%');
                 })
                 ->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
-            //dd($content);
             return Inertia::render('Contents/List', ['menu' => $nodes, 'component' => [], 'keys' => $request->keys, 'isIndex' => false, 'menuId' => $menuId, 'content' => $content, 'frameName' => $frameName, 'title' => $menu->name]);
         }
     }
