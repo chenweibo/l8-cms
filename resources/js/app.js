@@ -9,6 +9,8 @@ import ElementPlus from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
 import 'github-markdown-css/github-markdown.css'
 
+import 'dayjs/locale/zh-cn'
+import locale from 'element-plus/lib/locale/lang/zh-cn'
 
 const el = document.getElementById('app');
 
@@ -21,7 +23,7 @@ createApp({
         }),
 }).mixin({methods: {route}})
     .use(InertiaPlugin)
-    .use(ElementPlus)
+    .use(ElementPlus, { locale })
     .mount(el);
 
 InertiaProgress.init({color: '#4B5563'});

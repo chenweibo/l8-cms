@@ -1,5 +1,4 @@
 <template>
-
     <component :is="item.type" v-for="item in content" :content.sync="item"></component>
 </template>
 
@@ -9,6 +8,9 @@ import MultiUpload from '@/Components/Upload/MultiUpload'
 import FormInput from '@/Components/FormInput/index'
 import Tinymce from '@/Components/Tinymce/index.vue'
 import SampleFileUpload from '@/Components/Upload/SampleFileUpload'
+import TextArea from '@/Components/FormInput/TextArea'
+import DatePicker from '@/Components/FormInput/DatePicker'
+
 export default {
     name: "RenderComponent",
     props: {
@@ -22,7 +24,9 @@ export default {
         FormInput,
         MultiUpload,
         Tinymce,
-        SampleFileUpload
+        SampleFileUpload,
+        TextArea,
+        DatePicker
     }
 }
 </script>

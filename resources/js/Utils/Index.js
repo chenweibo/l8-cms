@@ -18,6 +18,8 @@ export const componentType = [
     {label: '多图上传', value: 'MultiUpload'},
     {label: '文件上传', value: 'SampleFileUpload'},
     {label: '富文本编辑器', value: 'Tinymce'},
+    {label: '文本域', value: 'TextArea'},
+    {label: '日期选择期', value: 'DatePicker'}
 ]
 export const componentTiled = {
     'OneUpload': '图片上传',
@@ -25,6 +27,8 @@ export const componentTiled = {
     'MultiUpload': '多图上传',
     'Tinymce': '富文本编辑器',
     'SampleFileUpload': '文件上传',
+    'TextArea': '文本域',
+    'DatePicker': '日期选择期'
 }
 
 export const componentScope = [
