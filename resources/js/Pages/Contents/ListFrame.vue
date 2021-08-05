@@ -263,8 +263,8 @@ export default {
             this.show = false
         },
         boxChange(v, status) {
-            //console.log(v.toElement.checked)
-            if (v.toElement.checked) {
+            //console.log(event.target.checked)
+            if (event.target.checked) {
                 let temp = []
                 _.forEach(this.$page.props.content.data, function (value, key) {
                     temp.push(value.id)
