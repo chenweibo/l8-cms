@@ -12,12 +12,9 @@ class ConfigController extends Controller
         $result = Artisan::call('config:cache');
         $result2 = Artisan::call('route:cache');
         $result3 = Artisan::call('view:cache');
-
     }
 
     public function clearOptimization()
     {
-
     }
-
 }

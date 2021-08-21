@@ -32,7 +32,7 @@ class CategoryController extends Controller
 
     public function categoryFlatTree(): \Illuminate\Http\JsonResponse
     {
-        $nodes = Category::where('type', 3)->orderBy('sort', 'asc')->get()->toFlatTree();
+        $nodes = Category::where('type', 2)->orderBy('sort', 'asc')->get()->toFlatTree();
 
         return response()->json([
             'category' => $nodes,
@@ -196,7 +196,7 @@ class CategoryController extends Controller
             $category->save();
         }
         if ($request->type == 1) {
-            $page = $category->page();
+            $page = $category->article();
             $page->update(['name' => $request->name]);
         }
 
@@ -268,11 +268,11 @@ class CategoryController extends Controller
         $list = Category::all();
         $content = '';
 
-        $start = '<?php' . PHP_EOL;
-        $content .= $start . PHP_EOL
-            . 'use Illuminate\Support\Facades\Route;' . PHP_EOL
-            . 'use App\Http\Controllers\Home\BusinessController;' . PHP_EOL
-            . 'use App\Http\Controllers\Home\CustomController;' . PHP_EOL . PHP_EOL;
+        $start = '<?php'.PHP_EOL;
+        $content .= $start.PHP_EOL
+            .'use Illuminate\Support\Facades\Route;'.PHP_EOL
+            .'use App\Http\Controllers\Home\BusinessController;'.PHP_EOL
+            .'use App\Http\Controllers\Home\CustomController;'.PHP_EOL.PHP_EOL;
 
         $handle = $this->handleRouteArr($content);
         File::replace(base_path('routes/template.php'), $handle);
@@ -289,17 +289,17 @@ class CategoryController extends Controller
             switch ($v->type) {
                 case $v->type == '0':
 
-                    $content .= "Route::get('" . $v->url . "', [ " . $v->controller . "::class, 'page']);" . PHP_EOL;
+                    $content .= "Route::get('".$v->url."', [ ".$v->controller."::class, 'page']);".PHP_EOL;
                     break;
                 case $v->type == '1':
-                    $content .= "Route::get('" . $v->url . "', [ " . $v->controller . "::class, 'page']);" . PHP_EOL;
+                    $content .= "Route::get('".$v->url."', [ ".$v->controller."::class, 'page']);".PHP_EOL;
                     break;
                 case $v->type == '2':
-                    $content .= "Route::get('" . $v->url . "/{id?}', [ " . $v->controller . "::class, 'list']);" . PHP_EOL;
-                    $content .= "Route::get('" . $v->url . "View/{id?}', [ " . $v->controller . "::class, 'listView']);" . PHP_EOL;
+                    $content .= "Route::get('".$v->url."/{id?}', [ ".$v->controller."::class, 'list']);".PHP_EOL;
+                    $content .= "Route::get('".$v->url."View/{id?}', [ ".$v->controller."::class, 'listView']);".PHP_EOL;
                     break;
                 case $v->type == '3':
-                    $content .= "Route::get('" . $v->url . "', [ " . $v->controller . "::class, '" . $v->function . "']);" . PHP_EOL;
+                    $content .= "Route::get('".$v->url."', [ ".$v->controller."::class, '".$v->function."']);".PHP_EOL;
                     break;
             }
         }

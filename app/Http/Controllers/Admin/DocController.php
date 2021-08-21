@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use File;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use File;
 
 class DocController extends Controller
 {

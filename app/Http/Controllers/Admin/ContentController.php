@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Component;
 use App\Models\Content;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -49,6 +50,7 @@ class ContentController extends Controller
                     return $query->where('name', 'like', '%'.$keys.'%');
                 })
                 ->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
+
             return Inertia::render('Contents/List', ['menu' => $nodes, 'component' => [], 'keys' => $request->keys, 'isIndex' => false, 'menuId' => $menuId, 'content' => $content, 'frameName' => $frameName, 'title' => $menu->name]);
         }
     }
@@ -217,6 +219,20 @@ class ContentController extends Controller
             $notice->category_id = $request->moveId;
             $notice->save();
         }
+
+        return back();
+    }
+
+    public function copyContent(Request $request)
+    {
+        $now = Carbon::now();
+        $content = Content::select('name', 'redirect', 'status', 'views', 'sort', 'detail', 'page_id', 'category_id', 'created_at', 'updated_at')->find($request->ids);
+        foreach ($content as $notice) {
+            $notice->category_id = $request->moveId;
+            $notice->created_at = $now;
+            $notice->updated_at = $now;
+        }
+        Content::insert($content->toArray());
 
         return back();
     }

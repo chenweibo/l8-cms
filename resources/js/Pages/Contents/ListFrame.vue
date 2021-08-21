@@ -17,8 +17,13 @@
                 </inertia-link>
                 <button
                     class="mr-1 group flex items-center  py-1.5 px-4 bg-gray-700 text-white font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
-                    @click="move">
-                    产品移动
+                    @click="move('move')">
+                    内容移动
+                </button>
+                <button
+                    class="mr-1 group flex items-center  py-1.5 px-4 bg-gray-700 text-white font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+                    @click="move('copy')">
+                    内容复制
                 </button>
                 <button
                     class=" group flex items-center  py-1.5 px-4 bg-gray-700 text-white font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
@@ -133,9 +138,9 @@
 
             <el-dialog
                 v-model="dialogVisible"
-                title="转移产品"
+                :title="moveDialogTitle"
                 width="30%">
-                <span style="margin-right: 10px">选择移动的分类</span>
+                <span style="margin-right: 10px">选择目标分类</span>
                 <el-select v-model="moveMenuId" placeholder="请选择">
                     <el-option
                         v-for="item in categoryFlatTree"
@@ -210,6 +215,8 @@ export default {
                 return false
             }),
             selectIds: [],
+            moveType:undefined,
+            moveDialogTitle:'内容移动',
             moveMenuId: undefined,
             allBox: false,
             categoryFlatTree: []
@@ -296,7 +303,9 @@ export default {
 
             }
         },
-        move() {
+        move(type) {
+            this.moveType = type
+            this.moveDialogTitle = type=="move" ? "内容移动" : "内容复制"
             if (this.selectIds.length <= 0) {
                 this.$message.error({
                     message: '警告哦，未选择任何内容。',
@@ -306,6 +315,7 @@ export default {
             }
             axios.get(route('categories.flatTree')).then(res => {
                 let {data} = res
+                //console.log(data)
                 this.categoryFlatTree = data.category
                 this.dialogVisible = true
             })
@@ -318,18 +328,34 @@ export default {
                 });
                 return false;
             }
-            this.$inertia.get(route('contents.move'), {
-                    ids: this.selectIds,
-                    menuId: this.$page.props.menuId,
-                    moveId: this.moveMenuId
-                },
-                {
-                    onSuccess: () => {
-                        this.selectIds = []
-                        this.allBox = false
+            if (this.moveType==='move'){
+                this.$inertia.get(route('contents.move'), {
+                        ids: this.selectIds,
+                        menuId: this.$page.props.menuId,
+                        moveId: this.moveMenuId
                     },
-                }
-            )
+                    {
+                        onSuccess: () => {
+                            this.selectIds = []
+                            this.allBox = false
+                        },
+                    }
+                )
+            }else {
+                this.$inertia.get(route('contents.copy'), {
+                        ids: this.selectIds,
+                        menuId: this.$page.props.menuId,
+                        moveId: this.moveMenuId
+                    },
+                    {
+                        onSuccess: () => {
+                            this.selectIds = []
+                            this.allBox = false
+                        },
+                    })
+            }
+
+
 
         }
 

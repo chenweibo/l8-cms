@@ -24,6 +24,5 @@ class BusinessController extends Controller
     public function text()
     {
         $result = Artisan::call('config:cache');
-
     }
 }

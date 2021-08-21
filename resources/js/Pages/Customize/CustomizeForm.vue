@@ -48,13 +48,13 @@
                                             </div>
                                         </div>
 
-                                        <div class="grid grid-cols-3 gap-6">
+                                        <div class="grid grid-cols-4 gap-6">
                                             <div class="col-span-3 sm:col-span-2">
                                                 <jet-label for="type" value="类型"/>
                                                 <el-radio-group v-model="form.type" class="mt-2" size="small">
-                                                    <el-radio-button v-for="v in componentType" :label="v.value">
+                                                    <el-radio v-for="v in componentType" :label="v.value" class="mb-2">
                                                         {{ v.label }}
-                                                    </el-radio-button>
+                                                    </el-radio>
                                                 </el-radio-group>
                                                 <jet-input-error :message="$page.props.errors.type" class="mt-2"/>
 
