@@ -102,6 +102,8 @@ class CategoryController extends Controller
             $category->refresh();
         }
 
+        $this->generateMenu();
+
         return Redirect::route('categories.index');
     }
 
@@ -199,7 +201,7 @@ class CategoryController extends Controller
             $page = $category->article();
             $page->update(['name' => $request->name]);
         }
-
+        $this->generateMenu();
         return Redirect::route('categories.index');
     }
 
@@ -212,9 +214,9 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->page()->delete();
+        $category->article()->delete();
         $category->delete();
-
+        $this->generateMenu();
         return Redirect::route('categories.index');
     }
 
@@ -263,7 +265,7 @@ class CategoryController extends Controller
         return response()->json(['code' => 200, 'status' => $category->status]);
     }
 
-    public function generateMenu(): RedirectResponse
+    public  function generateMenu()
     {
         $list = Category::all();
         $content = '';
@@ -277,7 +279,7 @@ class CategoryController extends Controller
         $handle = $this->handleRouteArr($content);
         File::replace(base_path('routes/template.php'), $handle);
 
-        return Redirect::route('categories.index');
+        //return Redirect::route('categories.index');
     }
 
     public function handleRouteArr($content)

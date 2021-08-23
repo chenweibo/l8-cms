@@ -77,6 +77,7 @@ import AppLayout from "@/Layouts/AppLayout";
 import Menu from "./Menu.vue";
 import ListFrame from './ListFrame';
 import PageFrame from './PageFrame';
+import MsgFrame from './MsgFrame';
 
 export default {
     name: "List",
@@ -84,7 +85,8 @@ export default {
         AppLayout,
         Menu,
         ListFrame,
-        PageFrame
+        PageFrame,
+        MsgFrame
     },
     methods: {
     }
