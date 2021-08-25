@@ -1,0 +1,11 @@
+.father-ul li:hover .drop-div {
+    display: block;
+}
+.drop-div {
+    display: none;
+}
+
+.swiper-container {
+    width: 100%;
+    height: 402px;
+}
