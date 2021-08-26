@@ -29,14 +29,14 @@ function arr2tree($list, $id = 'id', $pid = 'pid', $son = 'sub')
 
 function modifyEnv(array $data)
 {
-    $envPath = base_path().DIRECTORY_SEPARATOR.'.env';
+    $envPath = base_path() . DIRECTORY_SEPARATOR . '.env';
 
     $contentArray = collect(file($envPath, FILE_IGNORE_NEW_LINES));
 
     $contentArray->transform(function ($item) use ($data) {
         foreach ($data as $key => $value) {
             if (str_contains($item, $key)) {
-                return $key.'='.$value;
+                return $key . '=' . $value;
             }
         }
 
@@ -100,7 +100,7 @@ function handleMigrateComponent($component, $v)
         // dd($component,$v,$arr,!empty($arr));
 
         //dd($arr);
-        if (! empty($arr)) {
+        if (!empty($arr)) {
             //dd($component,$v,$arr[0]);
             $value['note'] = $arr[0]['note'];
             $value['value'] = $arr[0]['value'];
@@ -109,4 +109,17 @@ function handleMigrateComponent($component, $v)
     unset($value);
 
     return $component;
+}
+
+function handleDetailFormat($detail): array
+{
+
+    if ($detail) {
+        $arr = [];
+        foreach ($detail as $v) {
+            $arr[$v['column']] = $v['value'];
+        }
+        return $arr;
+    }
+    return [];
 }
