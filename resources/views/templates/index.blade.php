@@ -104,26 +104,6 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/Swiper/6.8.0/swiper-bundle.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/Swiper/6.8.0/swiper-bundle.min.js"></script>
-<script>
-
-    var app = new Vue({
-        el: '#menu',
-        data: {
-            message: 'Hello Vue!'
-        }
-    })
-
-    var mySwiper = new Swiper('.swiper-container', {
-        direction: 'horizontal', // 垂直切换选项
-        loop: true, // 循环模式选项
-        autoplay: true,
-
-        // 如果需要分页器
-        pagination: {
-            el: '.swiper-pagination',
-        },
-
-    })
-</script>
+<script src="@static/home/js/main.js"></script>
 </body>
 </html>

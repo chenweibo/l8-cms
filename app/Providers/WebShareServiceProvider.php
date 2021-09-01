@@ -23,8 +23,6 @@ class WebShareServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
-
         view()->composer(
             'templates.*',
             'App\Http\ViewComposers\BaseInfoComposer'

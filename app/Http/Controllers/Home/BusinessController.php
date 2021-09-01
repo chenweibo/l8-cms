@@ -21,6 +21,10 @@ class BusinessController extends Controller
     {
     }
 
+    public function download()
+    {
+    }
+
     public function text()
     {
         $result = Artisan::call('config:cache');

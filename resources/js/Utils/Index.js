@@ -37,6 +37,7 @@ export const componentScope = [
     {label: '单篇内容', value: 2},
     {label: '列表内容', value: 3},
     {label: '幻灯片设置', value: 4},
+    {label: '下载类目', value: 5},
 ]
 
 
@@ -65,8 +66,8 @@ export const categoryType = [
     {label: '常规', value: "0"}, {label: '单页', value: "1"}, {
     label: '列表',
     value: "2"
-},
-    {label: '自定义', value: "3"}]
+},{label: '下载', value: "4"},
+  {label: '自定义', value: "3"}]
 
 
 export function handleMergeContent(content, component) {

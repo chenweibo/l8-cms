@@ -6,6 +6,7 @@ namespace App\Http\ViewComposers;
 use Illuminate\Support\Facades\View;
 use Schema;
 use App\Models\Config;
+use App\Models\Category;
 
 class BaseInfoComposer
 {
@@ -21,5 +22,8 @@ class BaseInfoComposer
             $basic = Config::where('type', 'basic')->get();
             View::share('system', handleDetailFormat($basic[0]->options));
         }
+
+        View::share('menu', Category::orderBy('sort', 'asc')->get()->toTree());
+
     }
 }
