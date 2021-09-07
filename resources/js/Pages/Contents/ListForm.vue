@@ -2,14 +2,12 @@
     <app-layout>
         <div class="flex-col w-full md:flex md:flex-row md:min-h-screen bg-blueGray-50">
 
-
             <div class="flex flex-col w-64 h-screen px-4  bg-white border-r dark:bg-gray-800 dark:border-gray-600">
 
                 <div class="flex flex-col justify-between flex-1 mt-6">
                     <nav>
                         <Menu v-for="menu in $page.props.menu" :model="menu"/>
                     </nav>
-
                 </div>
             </div>
             <div class="flex-grow   py-4 sm:px-6 lg:px-8 ">
@@ -59,7 +57,6 @@
                                                    class="mt-1 block w-full" type="text"/>
                                     </div>
                                     <RenderComponent v-model:content="mergeContent"/>
-
 
                                 </div>
                             </div>

@@ -1,8 +1,9 @@
 <div class="swiper-container">
     <div class="swiper-wrapper">
+        @foreach(banner(3) as $v)
         <div class="swiper-slide">
             <div class="w-full bg-center bg-cover "
-                 style="background-image: url('/static/common/banner.jpeg'); height: 402px">
+                 style="background-image: url({{$v["banner_url"]}}); height: 402px">
                 <div class="flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-50">
                     <div class="text-center">
                         <h1 class="text-2xl font-semibold text-white uppercase lg:text-3xl">Build Your new <span
@@ -15,6 +16,8 @@
                 </div>
             </div>
         </div>
+        @endforeach
+
     </div>
     <!-- 如果需要分页器 -->
     <div class="swiper-pagination"></div>

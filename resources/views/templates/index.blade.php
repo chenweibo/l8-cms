@@ -17,7 +17,9 @@
 <body>
 @include('templates.header')
 @include('templates.banner')
-<div class="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+
+
+    <div class="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-5">
         <div class="grid gap-6 md:grid-cols-2 md:col-span-2 lg:col-span-3">
             <div class="rounded lg:p-5 lg:transition lg:duration-300 lg:hover:bg-indigo-50">

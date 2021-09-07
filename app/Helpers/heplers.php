@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Banner;
+
 /**
  * 一维数据数组生成数据树.
  * @param array $list 数据列表
@@ -8,7 +10,7 @@
  * @param string $son 定义子数据Key
  * @return array
  */
-function arr2tree($list, $id = 'id', $pid = 'pid', $son = 'sub')
+function arr2tree($list, $id = 'id', $pid = 'pid', $son = 'sub'): array
 {
     list($tree, $map) = [[], []];
     foreach ($list as $item) {
@@ -29,14 +31,14 @@ function arr2tree($list, $id = 'id', $pid = 'pid', $son = 'sub')
 
 function modifyEnv(array $data)
 {
-    $envPath = base_path() . DIRECTORY_SEPARATOR . '.env';
+    $envPath = base_path().DIRECTORY_SEPARATOR.'.env';
 
     $contentArray = collect(file($envPath, FILE_IGNORE_NEW_LINES));
 
     $contentArray->transform(function ($item) use ($data) {
         foreach ($data as $key => $value) {
             if (str_contains($item, $key)) {
-                return $key . '=' . $value;
+                return $key.'='.$value;
             }
         }
 
@@ -100,7 +102,7 @@ function handleMigrateComponent($component, $v)
         // dd($component,$v,$arr,!empty($arr));
 
         //dd($arr);
-        if (!empty($arr)) {
+        if (! empty($arr)) {
             //dd($component,$v,$arr[0]);
             $value['note'] = $arr[0]['note'];
             $value['value'] = $arr[0]['value'];
@@ -113,13 +115,46 @@ function handleMigrateComponent($component, $v)
 
 function handleDetailFormat($detail): array
 {
-
     if ($detail) {
         $arr = [];
         foreach ($detail as $v) {
             $arr[$v['column']] = $v['value'];
         }
+
         return $arr;
     }
+
     return [];
+}
+
+function handleBannerFormat($detail): array
+{
+    if ($detail) {
+        $arr = [];
+        foreach ($detail as $v) {
+            $arr[$v['column']] = $v['value'];
+        }
+
+        return $arr;
+    }
+
+    return [];
+}
+
+function banner($id): array
+{
+    $banners = Banner::select('banners')->find($id);
+
+    $result = [];
+
+    if ($banners->banners) {
+        // dd($banners->banners);
+        foreach ($banners->banners as $v) {
+            $result[] = handleBannerFormat($v);
+        }
+
+        return $result;
+    }
+
+    return $result;
 }
