@@ -187,4 +187,3 @@ function formatBytes($bytes): string
 
     return $bytes;
 }
-

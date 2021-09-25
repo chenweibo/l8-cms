@@ -88,7 +88,6 @@ class FilesController extends Controller
         }
 
         if (! Storage::disk($disk)->exists($path.DIRECTORY_SEPARATOR.$name)) {
-
             touch(Storage::disk($disk)->path($path.DIRECTORY_SEPARATOR.$name));
 
             return ['code' => 200, 'message' => 'ok'];

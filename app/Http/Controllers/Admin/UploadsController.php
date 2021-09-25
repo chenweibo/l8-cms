@@ -35,6 +35,7 @@ class UploadsController extends Controller
             $file,
             $file->getClientOriginalName()
         );
+
         return ['code'=>200];
     }
 }

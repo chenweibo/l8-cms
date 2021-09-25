@@ -61,7 +61,7 @@
                     <div class="mt-5 md:mt-0 md:col-span-2">
                         <div
                             class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
-                            <el-button @click="save">保存</el-button>
+                            <el-button @click="save" type="info" >保存</el-button>
                         </div>
                     </div>
 
