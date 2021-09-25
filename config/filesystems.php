@@ -41,7 +41,21 @@ return [
             'url' => env('APP_URL').'/static',
             'visibility' => 'public',
         ],
-
+        'templates' => [
+            'driver' => 'local',
+            'root' => resource_path('views/templates'),
+            'visibility' => 'public',
+        ],
+        'style' => [
+            'driver' => 'local',
+            'root' => public_path('static/home'),
+            'visibility' => 'public',
+        ],
+        'uploads' => [
+            'driver' => 'local',
+            'root' => public_path('static/uploads'),
+            'visibility' => 'public',
+        ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

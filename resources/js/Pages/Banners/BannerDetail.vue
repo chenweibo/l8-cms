@@ -10,7 +10,7 @@
 
                 <div class="flex flex-row justify-end">
                     <div class=" py-4">
-                        <el-button circle icon="el-icon-plus" type="primary" @click="addForm"></el-button>
+                        <el-button type="text" @click="addForm" >新增一组幻灯片</el-button>
                     </div>
                 </div>
 

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Overtrue\LaravelUploader\StrategyResolver;
-use Storage;
 
 class UploadsController extends Controller
 {
@@ -16,8 +16,25 @@ class UploadsController extends Controller
         return response()->json($response);
     }
 
-    public function download(Request $request): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    public function download(Request $request): \Symfony\Component\HttpFoundation\StreamedResponse
     {
         return Storage::disk('local')->download($request->pathToFile);
+    }
+
+    public function uploadManage(Request $request)
+    {
+        $disk = $request->input('disk');
+        $path = $request->input('path');
+        $file = $request->file('file');
+
+        if (! $path) {
+            $path = '';
+        }
+        Storage::disk($disk)->putFileAs(
+            $path,
+            $file,
+            $file->getClientOriginalName()
+        );
+        return ['code'=>200];
     }
 }

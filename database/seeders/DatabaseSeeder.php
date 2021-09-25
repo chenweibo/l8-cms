@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             ComponentSeeder::class,
             BannerSeeder::class,
             ContentSeeder::class,
-            MessageSeeder::class
+            MessageSeeder::class,
         ]);
     }
 }

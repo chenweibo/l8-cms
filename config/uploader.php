@@ -73,6 +73,20 @@ return [
             'directory' => 'avatars/{Y}/{m}/{d}',
         ],
 
+        'fileManage' => [
+            'name' => 'file',
+
+            /*
+             * Allowed MIME types.
+             */
+            'mimes' => ['image/jpeg', 'image/png', 'image/bmp', 'image/gif'],
+            'max_size' => '10m',
+            /*
+             * The disk name to store file, the value is key of `disks` in `config/filesystems.php`
+             */
+            'disk' => 'public',
+        ],
+
         //...
     ],
 ];

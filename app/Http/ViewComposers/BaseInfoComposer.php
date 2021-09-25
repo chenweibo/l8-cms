@@ -2,11 +2,10 @@
 
 namespace App\Http\ViewComposers;
 
-
+use App\Models\Category;
+use App\Models\Config;
 use Illuminate\Support\Facades\View;
 use Schema;
-use App\Models\Config;
-use App\Models\Category;
 
 class BaseInfoComposer
 {
@@ -24,6 +23,5 @@ class BaseInfoComposer
         }
 
         View::share('menu', Category::orderBy('sort', 'asc')->get()->toTree());
-
     }
 }

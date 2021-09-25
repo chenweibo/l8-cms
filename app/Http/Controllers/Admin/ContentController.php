@@ -53,8 +53,8 @@ class ContentController extends Controller
 
             return Inertia::render('Contents/List', ['menu' => $nodes, 'component' => [], 'keys' => $request->keys, 'isIndex' => false, 'menuId' => $menuId, 'content' => $content, 'frameName' => $frameName, 'title' => $menu->name]);
         }
-        return Inertia::render('Contents/List', ['menu' => $nodes, 'isIndex' => false, 'menuId' => $menuId, 'frameName' => 'MsgFrame', 'title' => $menu->name]);
 
+        return Inertia::render('Contents/List', ['menu' => $nodes, 'isIndex' => false, 'menuId' => $menuId, 'frameName' => 'MsgFrame', 'title' => $menu->name]);
     }
 
     /**

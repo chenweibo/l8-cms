@@ -64,10 +64,10 @@ export function conver(limit) {
 
 export const categoryType = [
     {label: '常规', value: "0"}, {label: '单页', value: "1"}, {
-    label: '列表',
-    value: "2"
-},{label: '下载', value: "4"},
-  {label: '自定义', value: "3"}]
+        label: '列表',
+        value: "2"
+    },{label: '下载', value: "4"},
+    {label: '自定义', value: "3"}]
 
 
 export function handleMergeContent(content, component) {
@@ -86,3 +86,17 @@ export function handleMergeContent(content, component) {
         return arr
     }
 }
+
+
+export const fileTag =
+    {
+    'pagination':'分页目录',
+    'index.blade.php':'首页页面',
+    'about.blade.php':'单篇模板',
+    'product.blade.php':'产品模板',
+    'productView.blade.php':'产品详情模板',
+    'news.blade.php':'产品模板',
+    'newsView.blade.php':'产品详情模板',
+    'contact.blade.php':'联系我们模板',
+    }
+

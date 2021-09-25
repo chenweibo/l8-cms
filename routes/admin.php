@@ -44,8 +44,21 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
         Route::get('/admin/file', [FilesController::class, 'index'])->name('files.index');
 
         Route::get('/admin/file/templates', [FilesController::class, 'getViews'])->name('files.templates');
-        Route::get('/admin/file/makeDir', [FilesController::class, 'makeDirectory'])->name('files.makeDirectory');
+
+        Route::post('/admin/file/makeDir', [FilesController::class, 'makeDirectory'])->name('files.makeDirectory');
+        Route::post('/admin/file/makeFile', [FilesController::class, 'makeFile'])->name('files.makeFile');
+
+        Route::delete('/admin/file', [FilesController::class, 'deleteFile'])->name('files.delete');
         Route::put('/updateNote/{component}', [ComponentController::class, 'updateNote'])->name('components.updateNote');
+        Route::get('/admin/filecontent', [FilesController::class, 'getFileContent'])->name('files.getcontent');
+
+        Route::post('/admin/unzip', [FilesController::class, 'unzip'])->name('files.unzip');
+
+        Route::put('/admin/filecontent', [FilesController::class, 'getUpdateFileContent'])->name('files.updatecontent');
+
+        Route::post('/admin/filemanage/upload', [UploadsController::class, 'uploadManage'])->name('uploads.up');
+
+        Route::get('/admin/filemanage/down/{disk}/{path?}', [FilesController::class, 'download'])->name('uploads.download');
 
         Route::get('/admin/accounts/index', [AccountController::class, 'index'])->name('accounts.index');
         Route::get('/admin/accounts/create', [AccountController::class, 'create'])->name('accounts.create');

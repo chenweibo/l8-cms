@@ -48,6 +48,10 @@
                                               :href="route('accounts.index')">
                                     账户管理
                                 </jet-nav-link>
+                                <jet-nav-link :href="route('files.index')" :active="route().current('files.*')">
+                                    文件管理
+                                </jet-nav-link>
+
                                 <jet-nav-link v-if="$page.props.user.isAdmin ==1" :active="route().current('doc.*')"
                                               :href="route('doc.index')">
                                     调用文档
