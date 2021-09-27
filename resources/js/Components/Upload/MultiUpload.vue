@@ -6,7 +6,8 @@
             <jet-label :for="content.column" :value="content.label+' ( '+ content.column+' )'"/>
             <div class="mt-2">
                 <el-upload
-                    :auto-upload="false"
+                    :post-action="route('uploads.up')"
+                    :headers="{'X-CSRF-TOKEN': $page.props.csrf_token}"
                     :file-list="handleList"
                     :on-change="handleChange"
                     action="#"

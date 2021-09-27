@@ -113,7 +113,7 @@ class AccountController extends Controller
 
     public function adminLogout(): RedirectResponse
     {
-        Auth::logout();
+        Auth::guard('web')->logout();
 
         return Redirect::route('login');
     }

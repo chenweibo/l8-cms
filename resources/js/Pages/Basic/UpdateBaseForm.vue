@@ -11,7 +11,7 @@
         </template>
         <template #actions>
             <jet-action-message :on="form.recentlySuccessful" class="mr-3">
-                已保存。、</jet-action-message>
+                已保存。</jet-action-message>
 
             <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 保存

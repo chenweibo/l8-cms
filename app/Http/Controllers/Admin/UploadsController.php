@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Overtrue\LaravelUploader\StrategyResolver;
 
 class UploadsController extends Controller
@@ -37,5 +38,19 @@ class UploadsController extends Controller
         );
 
         return ['code'=>200];
+    }
+
+    public function uploadFiles(Request $request)
+    {
+        $file = $request->file('file');
+
+        $name = Str::random(40).'.'.$file->getClientOriginalExtension();
+        $path = Storage::disk('public')->putFileAs(
+            'uploads/file',
+            $file,
+            $name
+        );
+
+        return ['path'=>$path, 'file'=>$file->getClientOriginalName()];
     }
 }

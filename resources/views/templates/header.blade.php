@@ -1,4 +1,5 @@
 <nav class="bg-white shadow dark:bg-gray-800">
+    {{dd($system)}}
     <div class="container px-6 py-4 mx-auto lg:flex lg:justify-between lg:items-center">
         <div class="lg:flex lg:items-center">
             <div class="flex items-center justify-between">

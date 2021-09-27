@@ -87,6 +87,7 @@ return [
             'disk' => 'public',
         ],
 
+
         //...
     ],
 ];

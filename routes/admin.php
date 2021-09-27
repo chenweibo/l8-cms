@@ -58,6 +58,8 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
 
         Route::post('/admin/filemanage/upload', [UploadsController::class, 'uploadManage'])->name('uploads.up');
 
+        Route::post('/admin/fileupload', [UploadsController::class, 'uploadFiles'])->name('uploads.uploadFiles');
+
         Route::get('/admin/filemanage/down/{disk}/{path?}', [FilesController::class, 'download'])->name('uploads.download');
 
         Route::get('/admin/accounts/index', [AccountController::class, 'index'])->name('accounts.index');

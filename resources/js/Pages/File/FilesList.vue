@@ -82,8 +82,8 @@
 
                     <td class="px-4 py-3 text-sm border">
                         <el-button @click="openFileDialog(v)" type="text" v-show="checkfile(v)">编辑</el-button>
-                        <el-button  type="text" @click="unzip(v)" v-show="v.split('.').pop()==='zip'" >解压</el-button>
-                        <el-button type="text" @click="rename(v)" >重命名</el-button>
+                        <el-button type="text" @click="unzip(v)" v-show="v.split('.').pop()==='zip'">解压</el-button>
+                        <el-button type="text" @click="rename(v)">重命名</el-button>
                         <el-popconfirm
                             confirmButtonText="好的"
                             cancelButtonText="不用了"
@@ -131,7 +131,7 @@
         >
 
             <div class="min-h-full">
-                 <OtherUpload :disk = "disk" :path="path" @refresh="refreshNow"/>
+                <OtherUpload :disk="disk" :path="path" @refresh="refreshNow"/>
             </div>
 
         </el-dialog>
@@ -169,7 +169,7 @@ export default {
             code: '',
             dialogVisible: false,
             filename: '',
-            fileDialogVisible:false
+            fileDialogVisible: false
         }
     },
     created() {
@@ -188,13 +188,13 @@ export default {
         }
     },
     methods: {
-        mkdir(){
+        mkdir() {
             this.$prompt('请输入文件夹名称', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
-                inputPattern:  /\S/,
+                inputPattern: /\S/,
                 inputErrorMessage: '名称不能为空'
-            }).then(({ value }) => {
+            }).then(({value}) => {
                 axios.post(route('files.makeDirectory'), {
                     name: value,
                     disk: this.disk,
@@ -216,13 +216,13 @@ export default {
 
             });
         },
-        mkfile(){
+        mkfile() {
             this.$prompt('请输入文件名称(注意带后缀 例 xx.txt)', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
-                inputPattern:  /\S/,
+                inputPattern: /\S/,
                 inputErrorMessage: '名称不能为空'
-            }).then(({ value }) => {
+            }).then(({value}) => {
                 axios.post(route('files.makeFile'), {
                     name: value,
                     disk: this.disk,
@@ -244,7 +244,7 @@ export default {
 
             });
         },
-        unzip(v){
+        unzip(v) {
             const file = v
 
             this.$confirm('此操作将解压该文件到当前目录, 是否继续?', '提示', {
@@ -257,7 +257,7 @@ export default {
 
                     disk: this.disk,
                     path: this.path,
-                    newName:file
+                    newName: file
 
                 }).then(res => {
 
@@ -283,13 +283,13 @@ export default {
                 });
             });
         },
-        rename(v){
+        rename(v) {
             this.$prompt('请输入新的名称', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 inputPattern: /^[0-9a-zA-Z\u4e00-\u9fa5\. ]+$/,
                 inputErrorMessage: '只允许数字字母和中文和 . 符号'
-            }).then(({ value }) => {
+            }).then(({value}) => {
                 this.$message({
                     type: 'success',
                     message: '你的邮箱是: ' + value
@@ -298,11 +298,11 @@ export default {
 
             });
         },
-        down(v){
+        down(v) {
             const disk = this.disk
-            const file  = this.path + '/' + v
+            const file = this.path + '/' + v
 
-            return route('uploads.download',disk)+file
+            return route('uploads.download', disk) + file
         },
         toRoot() {
             this.getData(this.disk, '')
@@ -337,8 +337,8 @@ export default {
             this.filename = filename
             this.code = ''
 
-            const ex =  filename.split('.').pop()
-            if(ex.indexOf(['jpeg',"jpg","png"])===1){
+            const ex = filename.split('.').pop()
+            if (ex.indexOf(['jpeg', "jpg", "png"]) === 1) {
                 this.$notify({
                     title: '警告',
                     message: '不支持编辑此格式',
@@ -411,23 +411,24 @@ export default {
             this.getData(this.disk, this.path + '/' + row)
 
         },
-        handleicon(v){
-        const ex =  v.split('.').pop()
+        handleicon(v) {
+            const ex = v.split('.').pop()
 
-            switch(ex) {
+            switch (ex) {
                 case 'zip': {
-                   return 'zip_icon'
+                    return 'zip_icon'
                 }
 
                 default: {
                     return 'file_icon'
                 }
-            }},
-        checkfile(v){
-            const ex =  v.split('.').pop()
-            const arr  =['zip']
+            }
+        },
+        checkfile(v) {
+            const ex = v.split('.').pop()
+            const arr = ['zip']
 
-           return  arr.indexOf(ex);
+            return arr.indexOf(ex);
         },
         openMakeDir() {
 
@@ -469,9 +470,11 @@ export default {
 .el-dropdown {
     vertical-align: top;
 }
+
 .el-dropdown + .el-dropdown {
     margin-left: 15px;
 }
+
 .el-icon-arrow-down {
     font-size: 12px;
 }
